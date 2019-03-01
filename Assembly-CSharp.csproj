@@ -60,19 +60,22 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Actor.cs" />
-    <Compile Include="Assets\Field.cs" />
-    <Compile Include="Assets\Npc.cs" />
-    <Compile Include="Assets\SceneControl_Intro.cs" />
-    <Compile Include="Assets\SceneControl_MainGame.cs" />
-    <Compile Include="Assets\SceneControl_MainMenu.cs" />
-    <Compile Include="Assets\SlidePuzzle.cs" />
-    <Compile Include="Assets\Tile.cs" />
-    <Compile Include="Assets\TileEditor.cs" />
-    <Compile Include="Assets\UI.cs" />
-    <Compile Include="Assets\UIDialog.cs" />
-    <Compile Include="Assets\UIMainGame.cs" />
-    <Compile Include="Assets\User.cs" />
+    <Compile Include="Assets\Scripts\Intro\SceneControl_Intro.cs" />
+    <Compile Include="Assets\Scripts\MainGame\Actor.cs" />
+    <Compile Include="Assets\Scripts\MainGame\Defines.cs" />
+    <Compile Include="Assets\Scripts\MainGame\DirCollider.cs" />
+    <Compile Include="Assets\Scripts\MainGame\Field.cs" />
+    <Compile Include="Assets\Scripts\MainGame\Npc.cs" />
+    <Compile Include="Assets\Scripts\MainGame\SceneControl_MainGame.cs" />
+    <Compile Include="Assets\Scripts\MainGame\SlidePuzzle.cs" />
+    <Compile Include="Assets\Scripts\MainGame\Tile.cs" />
+    <Compile Include="Assets\Scripts\MainGame\TileEditor.cs" />
+    <Compile Include="Assets\Scripts\MainGame\UI.cs" />
+    <Compile Include="Assets\Scripts\MainGame\UIDialog.cs" />
+    <Compile Include="Assets\Scripts\MainGame\UIMainGame.cs" />
+    <Compile Include="Assets\Scripts\MainGame\User.cs" />
+    <Compile Include="Assets\Scripts\MainGame\Wall.cs" />
+    <Compile Include="Assets\Scripts\MainMenu\SceneControl_MainMenu.cs" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>C:/Users/Public/Documents/Unity Projects/TowerOfHundred/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
