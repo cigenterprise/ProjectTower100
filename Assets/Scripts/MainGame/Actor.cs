@@ -10,7 +10,6 @@ public class Actor : MonoBehaviour
     public class Stat
     {
         public float moveSpeed = 0.1f;
-        public Vector2 direction = new Vector2( 0, -1 );
     }
     public Stat _stat = new Stat();
 

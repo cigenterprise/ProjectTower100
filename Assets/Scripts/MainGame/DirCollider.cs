@@ -32,6 +32,15 @@ public class DirCollider : MonoBehaviour
         
     }
 
+    private void OnTriggerEnter2D( Collider2D collision )
+    {
+        if ( collision.CompareTag( "Gate" ) )
+        {
+            SceneControl_MainGame._userObj.transform.localPosition = new Vector2( 0, 0 );
+            SceneControl_MainGame._field.LoadNextFloor();
+        }
+    }
+
     private void OnTriggerStay2D( Collider2D collision )
     {
         if ( collision.CompareTag( "Wall" ) )

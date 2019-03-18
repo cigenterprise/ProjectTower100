@@ -4,8 +4,12 @@ using UnityEngine;
 
 public class User : Actor
 {
-    GameObject dirObj = null;
-    DirCollider dirCollider = null;
+    struct DirObj
+    {
+        public GameObject gameObject;
+        public DirCollider dirCollider;
+    }
+    DirObj[] dirObj;
 
     new void Awake()
     {
@@ -13,9 +17,30 @@ public class User : Actor
 
         SetSprite( "hitEffect" );
 
-        dirObj = new GameObject();
-        dirObj.transform.SetParent( transform );
-        dirCollider = dirObj.AddComponent<DirCollider>();
+        dirObj = new DirObj[ DIRECTION.LTRB_INDEX_MAX ];
+        for ( int idx = 0; idx < DIRECTION.LTRB_INDEX_MAX; ++idx )
+        {
+            dirObj[ idx ].gameObject = new GameObject();
+            dirObj[ idx ].gameObject.transform.SetParent( transform );
+            dirObj[ idx ].dirCollider = dirObj[idx].gameObject.AddComponent<DirCollider>();
+            switch ( idx )
+            {
+                case DIRECTION.LEFT:
+                    dirObj[ idx ].gameObject.transform.localPosition = DIRECTION.LEFT_VEC2;
+                    break;
+                case DIRECTION.TOP:
+                    dirObj[ idx ].gameObject.transform.localPosition = DIRECTION.TOP_VEC2;
+                    break;
+                case DIRECTION.RIGHT:
+                    dirObj[ idx ].gameObject.transform.localPosition = DIRECTION.RIGHT_VEC2;
+                    break;
+                case DIRECTION.BOTTOM:
+                    dirObj[ idx ].gameObject.transform.localPosition = DIRECTION.BOTTOM_VEC2;
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 
     // Use this for initialization
@@ -27,37 +52,29 @@ public class User : Actor
     // Update is called once per frame
     void FixedUpdate()
     {
-        _stat.direction = new Vector2( 0, 0 );
-
         if ( Input.GetKey( KeyCode.RightArrow ) )
         {
-            _stat.direction += DIRECTION.RIGHT;
+            Move( dirObj[ DIRECTION.RIGHT ], _stat.moveSpeed );
             transform.localScale = new Vector3( 1, 1, 1 );
         }
         if ( Input.GetKey( KeyCode.LeftArrow ) )
         {
-            _stat.direction += DIRECTION.LEFT;
+            Move( dirObj[ DIRECTION.LEFT ], _stat.moveSpeed );
             //transform.localScale = new Vector3( -1, 1, 1 );
         }
         if ( Input.GetKey( KeyCode.UpArrow ) )
         {
-            _stat.direction += DIRECTION.TOP;
+            Move( dirObj[ DIRECTION.TOP ], _stat.moveSpeed );
         }
         if ( Input.GetKey( KeyCode.DownArrow ) )
         {
-            _stat.direction += DIRECTION.BOTTOM;
+            Move( dirObj[ DIRECTION.BOTTOM ], _stat.moveSpeed );
         }
-
-        Vector2 dir = _stat.direction * _stat.moveSpeed;
-        dirObj.transform.localPosition = new Vector3( dir.x, dir.y, 0 ) * 10;
-        Move( _stat.direction * _stat.moveSpeed );
-
     }
 
-    void Move( Vector2 dir )
+    void Move( DirObj dirObj, float speed )
     {
-        if ( dirCollider.bMovable )
-            transform.position += new Vector3( dir.x, dir.y, 0 );
+        if ( dirObj.dirCollider.bMovable ) transform.position += dirObj.gameObject.transform.localPosition * speed;
     }
 
 }
