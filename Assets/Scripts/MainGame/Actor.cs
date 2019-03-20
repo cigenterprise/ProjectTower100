@@ -10,6 +10,8 @@ public class Actor : MonoBehaviour
     public class Stat
     {
         public float moveSpeed = 0.1f;
+        public float hpCurrent = 10.0f;
+        public float hpMax = 10.0f;
     }
     public Stat _stat = new Stat();
 

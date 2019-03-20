@@ -11,6 +11,8 @@ public class User : Actor
     }
     DirObj[] dirObj;
 
+    UIUser uiUser;
+
     new void Awake()
     {
         base.Awake();
@@ -41,6 +43,10 @@ public class User : Actor
                     break;
             }
         }
+
+        GameObject uiObj = new GameObject();
+        uiUser = uiObj.AddComponent<UIUser>();
+        uiObj.transform.SetParent(transform);
     }
 
     // Use this for initialization
