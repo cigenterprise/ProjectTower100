@@ -7,11 +7,12 @@ public class DirCollider : MonoBehaviour
     public BoxCollider2D dirCollider = null;
     public Rigidbody2D dirRigidBody = null;
     public bool bMovable = true;
+    public float colliderSize = 0.2f;
 
     private void Awake()
     {
         dirCollider = gameObject.AddComponent<BoxCollider2D>();
-        dirCollider.size = new Vector2( 1, 1 );
+        dirCollider.size = new Vector2( colliderSize, colliderSize );
         dirCollider.isTrigger = true;
 
         dirRigidBody = gameObject.AddComponent<Rigidbody2D>();
@@ -30,6 +31,15 @@ public class DirCollider : MonoBehaviour
     void Update()
     {
         
+    }
+
+    private void OnTriggerEnter2D( Collider2D collision )
+    {
+        if ( collision.CompareTag( "Gate" ) )
+        {
+            SceneControl_MainGame._userObj.transform.localPosition = new Vector2( 0, 0 );
+            SceneControl_MainGame._field.LoadNextFloor();
+        }
     }
 
     private void OnTriggerStay2D( Collider2D collision )

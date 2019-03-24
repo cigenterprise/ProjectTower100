@@ -9,6 +9,7 @@ public class SceneControl_MainGame : MonoBehaviour
     public static Camera _mainCamera = null;
     public static GameObject _uiDialogObj = null;
     public static GameObject _uiMainGameObj = null;
+    public static GameObject _userObj = null;
     public static Field _field = null;
     public static bool _editMode = false;
     public static TileEditor _tileEditor = null;
@@ -50,12 +51,6 @@ public class SceneControl_MainGame : MonoBehaviour
             _uiMainGameObj.SetActive( true );
         }
 
-        // 에디터
-        GameObject tileEditorObj = new GameObject();
-        tileEditorObj.transform.SetParent( transform );
-        tileEditorObj.name = "TileEditor";
-        _tileEditor = tileEditorObj.AddComponent<TileEditor>();
-
         // Field
         GameObject fieldObj = new GameObject();
         fieldObj.transform.SetParent( transform );
@@ -70,10 +65,10 @@ public class SceneControl_MainGame : MonoBehaviour
         npc.SetPosition( 2, 1 );
 
         // User
-        GameObject userObj = new GameObject();
-        userObj.transform.SetParent( transform );
-        userObj.name = "User";
-        User user = userObj.AddComponent<User>();
+        _userObj = new GameObject();
+        _userObj.transform.SetParent( transform );
+        _userObj.name = "User";
+        User user = _userObj.AddComponent<User>();
         user.SetPosition( -1, -1 );
     }
 
@@ -88,4 +83,5 @@ public class SceneControl_MainGame : MonoBehaviour
     {
 
     }
+
 }

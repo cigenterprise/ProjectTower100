@@ -6,11 +6,14 @@ public class Actor : MonoBehaviour
 {
 
     private SpriteRenderer _spriteRenderer = null;
+    protected BoxCollider2D bodyCollider = null;
 
+    [System.Serializable]
     public class Stat
     {
         public float moveSpeed = 0.1f;
-        public Vector2 direction = new Vector2( 0, -1 );
+        public float hpCurrent = 10.0f;
+        public float hpMax = 10.0f;
     }
     public Stat _stat = new Stat();
 
@@ -19,9 +22,10 @@ public class Actor : MonoBehaviour
         _spriteRenderer = gameObject.AddComponent<SpriteRenderer>();
         SetSprite( "hitEffect" );
 
-        BoxCollider2D boxCollider = gameObject.AddComponent<BoxCollider2D>();
-        boxCollider.size = new Vector2( 1, 1 );
-        boxCollider.isTrigger = true;
+        bodyCollider = gameObject.AddComponent<BoxCollider2D>();
+        bodyCollider.size = new Vector2( 1, 1 );
+        bodyCollider.isTrigger = true;
+        bodyCollider.tag = "Actor";
 
         Rigidbody2D rigidBody = gameObject.AddComponent<Rigidbody2D>();
         rigidBody.bodyType = RigidbodyType2D.Static;
