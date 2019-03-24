@@ -6,6 +6,7 @@ public class Actor : MonoBehaviour
 {
 
     private SpriteRenderer _spriteRenderer = null;
+    protected Vector2 spriteSize = new Vector2( 1, 1 );
     protected BoxCollider2D bodyCollider = null;
 
     [System.Serializable]
@@ -19,7 +20,13 @@ public class Actor : MonoBehaviour
 
     protected void Awake()
     {
-        _spriteRenderer = gameObject.AddComponent<SpriteRenderer>();
+        GameObject spriteObj = new GameObject();
+        spriteObj.name = "Sprite";
+        spriteObj.transform.SetParent(transform);
+        RectTransform spriteTfm = spriteObj.AddComponent<RectTransform>();
+        spriteTfm.localScale = new Vector3( 1, 1, 1 );
+        _spriteRenderer = spriteObj.AddComponent<SpriteRenderer>();
+        _spriteRenderer.drawMode = SpriteDrawMode.Sliced;
         SetSprite( "hitEffect" );
 
         bodyCollider = gameObject.AddComponent<BoxCollider2D>();
@@ -53,6 +60,7 @@ public class Actor : MonoBehaviour
     public void SetSprite( string filePath )
     {
         _spriteRenderer.sprite = Resources.Load<Sprite>( filePath );
+        _spriteRenderer.size = spriteSize;
     }
 
 }

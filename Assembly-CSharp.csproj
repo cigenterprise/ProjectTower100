@@ -65,6 +65,7 @@
     <Compile Include="Assets\Scripts\MainGame\Defines.cs" />
     <Compile Include="Assets\Scripts\MainGame\DirCollider.cs" />
     <Compile Include="Assets\Scripts\MainGame\Field.cs" />
+    <Compile Include="Assets\Scripts\MainGame\Module_Parse.cs" />
     <Compile Include="Assets\Scripts\MainGame\Npc.cs" />
     <Compile Include="Assets\Scripts\MainGame\SceneControl_MainGame.cs" />
     <Compile Include="Assets\Scripts\MainGame\SlidePuzzle.cs" />
@@ -77,6 +78,7 @@
     <Compile Include="Assets\Scripts\MainGame\User.cs" />
     <Compile Include="Assets\Scripts\MainGame\Wall.cs" />
     <Compile Include="Assets\Scripts\MainMenu\SceneControl_MainMenu.cs" />
+    <None Include="Assets\Resources\Dialog\Test.txt" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>C:/Users/Arc/Desktop/Git_Repository/Tower100/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>

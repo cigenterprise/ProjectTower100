@@ -33,7 +33,8 @@ public class Npc : Actor
 
     void OnTriggerEnter2D( Collider2D collision )
     {
-        if ( collision.CompareTag( "Actor" ) && ( _typeFlag & TYPEFLAG.DIALOG ) == TYPEFLAG.DIALOG ) PopupDialog( "POPUP!!\n\n(Press space-bar to close)" );
+        string str = SceneControl_MainGame.parser.parseDialog.GetCurrent().Value.script;
+        if ( collision.CompareTag( "Actor" ) && ( _typeFlag & TYPEFLAG.DIALOG ) == TYPEFLAG.DIALOG ) PopupDialog( str );
     }
 
     void PopupSlidePuzzle()

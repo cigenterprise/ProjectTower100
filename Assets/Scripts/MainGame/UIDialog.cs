@@ -39,6 +39,20 @@ public class UIDialog : UI
 
     protected override void MakeComponents()
     {
+        // 일러스트
+        if (!_illustObj)
+        {
+            _illustObj = new GameObject();
+            _illustObj.transform.SetParent(transform);
+            _illustObj.name = "Illust";
+            //_illustObj.transform.localPosition = new Vector2( 0, _canvas.pixelRect.height / 2 );
+            _illustObj.transform.localPosition = new Vector2(0, 0);
+            _illust = _illustObj.AddComponent<RawImage>();
+            CustomAnchor(_illust.rectTransform, CUSTOM_ANCHOR.BOTTOM_LEFT);
+            // 임시
+            SetIllust("Ahri");
+        }
+
         // 대화창
         if ( !_dialogObj )
         {
@@ -60,7 +74,7 @@ public class UIDialog : UI
             _textObj = new GameObject();
             _textObj.transform.SetParent( transform );
             _textObj.name = "Text";
-            _textObj.transform.localPosition = new Vector2( 0, 0 );
+            _textObj.transform.localPosition = new Vector3( 0, 0, 1 );
             _text = _textObj.AddComponent<Text>();
             CustomAnchor( _text.rectTransform, CUSTOM_ANCHOR.BOTTOM );
             _text.rectTransform.SetSizeWithCurrentAnchors( RectTransform.Axis.Horizontal, _canvas.pixelRect.width * 0.9f );
@@ -71,18 +85,6 @@ public class UIDialog : UI
             _text.text = "대화창 테스트~~";
         }
 
-        // 일러스트
-        if ( !_illustObj )
-        {
-            _illustObj = new GameObject();
-            _illustObj.transform.SetParent( transform );
-            _illustObj.name = "Illust";
-            _illustObj.transform.localPosition = new Vector2( 0, _canvas.pixelRect.height / 2 );
-            _illust = _illustObj.AddComponent<RawImage>();
-            CustomAnchor( _illust.rectTransform, CUSTOM_ANCHOR.BOTTOM_LEFT );
-            // 임시
-            SetIllust( "sample" );
-        }
     }
 
     public void SetText( string str )

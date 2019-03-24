@@ -17,7 +17,9 @@ public class User : Actor
     {
         base.Awake();
 
-        SetSprite( "hitEffect" );
+        spriteSize.Set( 1.0f, 1.5f );
+
+        SetSprite( "Ahri_SD" );
 
         dirObj = new DirObj[ DIRECTION.LTRB_INDEX_MAX ];
         for ( int idx = 0; idx < DIRECTION.LTRB_INDEX_MAX; ++idx )

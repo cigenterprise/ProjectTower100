@@ -13,6 +13,7 @@ public class SceneControl_MainGame : MonoBehaviour
     public static Field _field = null;
     public static bool _editMode = false;
     public static TileEditor _tileEditor = null;
+    public static Module_Parse parser = null;
 
     private void Awake()
     {
@@ -70,6 +71,10 @@ public class SceneControl_MainGame : MonoBehaviour
         _userObj.name = "User";
         User user = _userObj.AddComponent<User>();
         user.SetPosition( -1, -1 );
+
+        GameObject parserObj = new GameObject();
+        parser = parserObj.AddComponent<Module_Parse>();
+        parser.ReadFile( "Assets/Resources/Dialog/Test.txt" );
     }
 
     // Use this for initialization
