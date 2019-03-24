@@ -7,6 +7,13 @@ public class UIUser : UI
 {
 
     public User user = null;
+    GameObject hpObj = null;
+    GameObject hpBgObj = null;
+    RawImage hpImg = null;
+    const float kSpaceY = 0.5f;
+    const float kHpBarBgWidth = 60;
+    const float kHpBarBgHeight = 20;
+    const float kHpBarHeight = 10;
 
     new void Awake()
     {
@@ -26,22 +33,30 @@ public class UIUser : UI
     // Update is called once per frame
     void Update()
     {
-        
+        hpObj.transform.position = SceneControl_MainGame._mainCamera.WorldToScreenPoint( user.transform.position + new Vector3( 0, kSpaceY, 0 ) );
+        hpBgObj.transform.position = SceneControl_MainGame._mainCamera.WorldToScreenPoint( user.transform.position + new Vector3( 0, kSpaceY, 0 ) );
+        hpImg.rectTransform.SetSizeWithCurrentAnchors( RectTransform.Axis.Horizontal, kHpBarBgWidth * user._stat.hpCurrent / user._stat.hpMax );
     }
 
     protected override void MakeComponents()
     {
-        GameObject hpObj = new GameObject();
+        hpObj = new GameObject();
         hpObj.transform.SetParent(transform);
-        hpObj.name = "Background";
-        hpObj.transform.localPosition = //new Vector2(10, 0);
-        SceneControl_MainGame._mainCamera.WorldToScreenPoint(new Vector3(10, 0, 0));
-        RawImage dialogImg = hpObj.AddComponent<RawImage>();
-        //CustomAnchor(dialogImg.rectTransform, CUSTOM_ANCHOR.BOTTOM);
-        dialogImg.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 50);
-        dialogImg.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 10);
-        //dialogImg.texture = Resources.Load("Sprites/Tap and Fly/Sprites/GUI/window_score", typeof(Texture)) as Texture;
-        dialogImg.color = new Color(0.5f, 0.5f, 0.5f, 0.4f);
+        hpObj.name = "HpBar";
+        hpImg = hpObj.AddComponent<RawImage>();
+        hpImg.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, kHpBarBgWidth );
+        hpImg.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, kHpBarHeight );
+        //hpImg.texture = Resources.Load("Sprites/Tap and Fly/Sprites/GUI/window_score", typeof(Texture)) as Texture;
+        hpImg.color = new Color(0.5f, 0.0f, 0.0f, 0.7f);
+
+        hpBgObj = new GameObject();
+        hpBgObj.transform.SetParent( transform );
+        hpBgObj.name = "HpBarBg";
+        RawImage hpBgImg = hpBgObj.AddComponent<RawImage>();
+        hpBgImg.rectTransform.SetSizeWithCurrentAnchors( RectTransform.Axis.Horizontal, kHpBarBgWidth );
+        hpBgImg.rectTransform.SetSizeWithCurrentAnchors( RectTransform.Axis.Vertical, kHpBarBgHeight );
+        //bgImg.texture = Resources.Load("Sprites/Tap and Fly/Sprites/GUI/window_score", typeof(Texture)) as Texture;
+        hpBgImg.color = new Color( 1, 1, 1, 0.2f );
     }
 
     public void SetUser(User user)

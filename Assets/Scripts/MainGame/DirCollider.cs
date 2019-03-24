@@ -7,11 +7,12 @@ public class DirCollider : MonoBehaviour
     public BoxCollider2D dirCollider = null;
     public Rigidbody2D dirRigidBody = null;
     public bool bMovable = true;
+    public float colliderSize = 0.2f;
 
     private void Awake()
     {
         dirCollider = gameObject.AddComponent<BoxCollider2D>();
-        dirCollider.size = new Vector2( 1, 1 );
+        dirCollider.size = new Vector2( colliderSize, colliderSize );
         dirCollider.isTrigger = true;
 
         dirRigidBody = gameObject.AddComponent<Rigidbody2D>();

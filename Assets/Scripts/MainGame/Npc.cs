@@ -28,12 +28,12 @@ public class Npc : Actor
     // Update is called once per frame
     void Update()
     {
-
+        if ( Input.GetKeyDown( KeyCode.Space ) ) SceneControl_MainGame._uiDialogObj.SetActive( false );
     }
 
     void OnTriggerEnter2D( Collider2D collision )
     {
-        if ( ( _typeFlag & TYPEFLAG.DIALOG ) == TYPEFLAG.DIALOG ) PopupDialog( "POPUP!!" );
+        if ( collision.CompareTag( "Actor" ) && ( _typeFlag & TYPEFLAG.DIALOG ) == TYPEFLAG.DIALOG ) PopupDialog( "POPUP!!\n\n(Press space-bar to close)" );
     }
 
     void PopupSlidePuzzle()
