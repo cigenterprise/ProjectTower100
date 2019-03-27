@@ -8,6 +8,7 @@ public class SceneControl_MainGame : MonoBehaviour
 
     public static Camera _mainCamera = null;
     public static GameObject _uiDialogObj = null;
+    public static UIDialog _uiDialog = null;
     public static GameObject _uiMainGameObj = null;
     public static GameObject _userObj = null;
     public static Field _field = null;
@@ -39,7 +40,7 @@ public class SceneControl_MainGame : MonoBehaviour
         {
             _uiDialogObj = new GameObject();
             _uiDialogObj.transform.SetParent( transform );
-            UIDialog uiDialog = _uiDialogObj.AddComponent<UIDialog>();
+            _uiDialog = _uiDialogObj.AddComponent<UIDialog>();
             _uiDialogObj.SetActive( false );
         }
 
@@ -72,9 +73,7 @@ public class SceneControl_MainGame : MonoBehaviour
         User user = _userObj.AddComponent<User>();
         user.SetPosition( -1, -1 );
 
-        GameObject parserObj = new GameObject();
-        parser = parserObj.AddComponent<Module_Parse>();
-        parser.ReadFile( "Assets/Resources/Dialog/Test.txt" );
+        parser = gameObject.AddComponent<Module_Parse>();
     }
 
     // Use this for initialization

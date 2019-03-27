@@ -10,6 +10,7 @@ public class UIDialog : UI
     private Text _text = null;
     private GameObject _illustObj = null;
     private RawImage _illust = null;
+    private bool bActive = false;
 
     new void Awake()
     {
@@ -29,7 +30,20 @@ public class UIDialog : UI
     // Update is called once per frame
     void Update()
     {
+        if ( bActive && Input.GetKeyDown( KeyCode.Space ) )
+        {
+            bool EOF = !SceneControl_MainGame.parser.parseDialog.Next();
+            if ( EOF )
+            {
+                SceneControl_MainGame.parser.parseDialog.Clear();
+                bActive = false;
+                gameObject.SetActive( false );
+                return;
+            }
 
+            Module_Parse.Parse_Dialog.DlgStruct dlgStruct = SceneControl_MainGame.parser.parseDialog.GetCurrent().Value;
+            SetText( dlgStruct.speaker + ": " + dlgStruct.script );
+        }
     }
 
     public void SetPosition( Vector2 pos )
@@ -100,6 +114,15 @@ public class UIDialog : UI
         _illust.texture = Resources.Load<Texture>( filePath );
         _illust.rectTransform.SetSizeWithCurrentAnchors( RectTransform.Axis.Horizontal, _illust.texture.width * 0.3f );
         _illust.rectTransform.SetSizeWithCurrentAnchors( RectTransform.Axis.Vertical, _illust.texture.height * 0.3f );
+    }
+
+    public void PopUpDialog( string fileName )
+    {
+        SceneControl_MainGame.parser.ReadFile( "Assets/Resources/Dialog/" + fileName );
+        Module_Parse.Parse_Dialog.DlgStruct dlgStruct = SceneControl_MainGame.parser.parseDialog.GetCurrent().Value;
+        SetText( dlgStruct.speaker + ": " + dlgStruct.script );
+        gameObject.SetActive( true );
+        bActive = true;
     }
 
 }

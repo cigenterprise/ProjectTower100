@@ -22,12 +22,14 @@ public class Module_Parse : MonoBehaviour
         
         public void Open( string filePath )
         {
-            dlgArr = File.ReadAllLines( filePath, System.Text.Encoding.Default );
+            dlgArr = File.ReadAllLines( filePath );
         }
 
-        public void Next()
+        public bool Next()
         {
             ++dlgIdx;
+            if ( dlgIdx == dlgArr.Length ) return false;
+            else return true;
         }
 
         public DlgStruct? GetCurrent()
@@ -35,6 +37,12 @@ public class Module_Parse : MonoBehaviour
             string[] split = dlgArr[ dlgIdx ].Split( ':' );
             if ( split.GetLength( 0 ) == 0 ) return null;
             return new DlgStruct( split[ 0 ], split[ 1 ] );
+        }
+
+        public void Clear()
+        {
+            dlgArr = null;
+            dlgIdx = 0;
         }
     }
     public Parse_Dialog parseDialog = null;

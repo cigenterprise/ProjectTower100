@@ -28,13 +28,15 @@ public class Npc : Actor
     // Update is called once per frame
     void Update()
     {
-        if ( Input.GetKeyDown( KeyCode.Space ) ) SceneControl_MainGame._uiDialogObj.SetActive( false );
+        //if ( Input.GetKeyDown( KeyCode.Space ) ) SceneControl_MainGame._uiDialogObj.SetActive( false );
     }
 
     void OnTriggerEnter2D( Collider2D collision )
     {
-        string str = SceneControl_MainGame.parser.parseDialog.GetCurrent().Value.script;
-        if ( collision.CompareTag( "Actor" ) && ( _typeFlag & TYPEFLAG.DIALOG ) == TYPEFLAG.DIALOG ) PopupDialog( str );
+        if ( collision.CompareTag( "Actor" ) && ( _typeFlag & TYPEFLAG.DIALOG ) == TYPEFLAG.DIALOG )
+        {
+            SceneControl_MainGame._uiDialog.PopUpDialog( "Test.txt" );
+        }
     }
 
     void PopupSlidePuzzle()
@@ -43,12 +45,6 @@ public class Npc : Actor
         gameObject.name = "SlidePuzzle";
         gameObject.AddComponent<SlidePuzzle>();
         gameObject.transform.SetParent( transform.parent );
-    }
-
-    void PopupDialog( string str )
-    {
-        SceneControl_MainGame._uiDialogObj.GetComponent<UIDialog>().SetText( str );
-        SceneControl_MainGame._uiDialogObj.SetActive( true );
     }
 
 }
