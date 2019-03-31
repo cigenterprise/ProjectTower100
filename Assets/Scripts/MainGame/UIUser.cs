@@ -42,8 +42,10 @@ public class UIUser : UI
     {
         hpObj = new GameObject();
         hpObj.transform.SetParent(transform);
+        hpObj.transform.localPosition = new Vector2( 0, 0 );
         hpObj.name = "HpBar";
         hpImg = hpObj.AddComponent<RawImage>();
+        CustomAnchor( hpImg.rectTransform, CUSTOM_ANCHOR.TOP_LEFT );
         hpImg.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, kHpBarBgWidth );
         hpImg.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, kHpBarHeight );
         //hpImg.texture = Resources.Load("Sprites/Tap and Fly/Sprites/GUI/window_score", typeof(Texture)) as Texture;
@@ -53,6 +55,7 @@ public class UIUser : UI
         hpBgObj.transform.SetParent( transform );
         hpBgObj.name = "HpBarBg";
         RawImage hpBgImg = hpBgObj.AddComponent<RawImage>();
+        CustomAnchor( hpBgImg.rectTransform, CUSTOM_ANCHOR.TOP_LEFT );
         hpBgImg.rectTransform.SetSizeWithCurrentAnchors( RectTransform.Axis.Horizontal, kHpBarBgWidth );
         hpBgImg.rectTransform.SetSizeWithCurrentAnchors( RectTransform.Axis.Vertical, kHpBarBgHeight );
         //bgImg.texture = Resources.Load("Sprites/Tap and Fly/Sprites/GUI/window_score", typeof(Texture)) as Texture;

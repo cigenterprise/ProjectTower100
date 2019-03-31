@@ -11,6 +11,8 @@ public class SceneControl_MainGame : MonoBehaviour
     public static UIDialog _uiDialog = null;
     public static GameObject _uiMainGameObj = null;
     public static GameObject _userObj = null;
+    public static GameObject _uiInvenObj = null;
+    public static User _user = null;
     public static Field _field = null;
     public static bool _editMode = false;
     public static TileEditor _tileEditor = null;
@@ -53,6 +55,14 @@ public class SceneControl_MainGame : MonoBehaviour
             _uiMainGameObj.SetActive( true );
         }
 
+        if ( !_uiInvenObj )
+        {
+            _uiInvenObj = new GameObject();
+            _uiInvenObj.transform.SetParent( transform );
+            UIInventory uiInven = _uiInvenObj.AddComponent<UIInventory>();
+            _uiInvenObj.SetActive( false );
+        }
+
         // Field
         GameObject fieldObj = new GameObject();
         fieldObj.transform.SetParent( transform );
@@ -70,9 +80,10 @@ public class SceneControl_MainGame : MonoBehaviour
         _userObj = new GameObject();
         _userObj.transform.SetParent( transform );
         _userObj.name = "User";
-        User user = _userObj.AddComponent<User>();
-        user.SetPosition( -1, -1 );
+        _user = _userObj.AddComponent<User>();
+        _user.SetPosition( -1, -1 );
 
+        // Parser
         parser = gameObject.AddComponent<Module_Parse>();
     }
 
@@ -85,7 +96,7 @@ public class SceneControl_MainGame : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if ( Input.GetKeyDown( KeyCode.I ) ) _uiInvenObj.SetActive( !_uiInvenObj.activeSelf );
     }
 
 }

@@ -41,6 +41,7 @@ public abstract class UI : MonoBehaviour
 
     public enum CUSTOM_ANCHOR
     {
+        TOP_LEFT,
         BOTTOM,
         BOTTOM_LEFT,
     }
@@ -48,6 +49,11 @@ public abstract class UI : MonoBehaviour
     {
         switch ( anchor )
         {
+            case CUSTOM_ANCHOR.TOP_LEFT:
+                rect.pivot = new Vector2( 0, 1 );
+                rect.anchorMin = new Vector2( 0, 1 );
+                rect.anchorMax = new Vector2( 0, 1 );
+                break;
             case CUSTOM_ANCHOR.BOTTOM:
                 rect.pivot = new Vector2( 0.5f, 0 );
                 rect.anchorMin = new Vector2( 0.5f, 0 );

@@ -6,8 +6,10 @@ public class Actor : MonoBehaviour
 {
 
     private SpriteRenderer _spriteRenderer = null;
+    private GameObject spriteObj = null;
     protected Vector2 spriteSize = new Vector2( 1, 1 );
     protected BoxCollider2D bodyCollider = null;
+    private Animator animator = null;
 
     [System.Serializable]
     public class Stat
@@ -20,7 +22,7 @@ public class Actor : MonoBehaviour
 
     protected void Awake()
     {
-        GameObject spriteObj = new GameObject();
+        spriteObj = new GameObject();
         spriteObj.name = "Sprite";
         spriteObj.transform.SetParent(transform);
         RectTransform spriteTfm = spriteObj.AddComponent<RectTransform>();
@@ -63,4 +65,10 @@ public class Actor : MonoBehaviour
         _spriteRenderer.size = spriteSize;
     }
 
+    public void SetAnimation( string filePath )
+    {
+        if ( !animator ) animator = spriteObj.AddComponent<Animator>();
+        
+        animator.runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>( filePath );
+    }
 }

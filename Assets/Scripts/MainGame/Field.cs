@@ -28,9 +28,11 @@ public class Field : MonoBehaviour
     public void LoadNextFloor()
     {
         if ( fieldObj ) Destroy( fieldObj );
-        GameObject prefab = Resources.Load( "PF_Field" + currentField.ToString() ) as GameObject;
+        GameObject prefab = Resources.Load( "Map/PF_Field" + currentField.ToString() ) as GameObject;
         fieldObj = Instantiate( prefab );
         ++currentField;
+
+        if ( SceneControl_MainGame._user ) SceneControl_MainGame._user.ClearDirObj();
     }
 
 }

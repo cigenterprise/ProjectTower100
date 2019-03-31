@@ -11,15 +11,16 @@ public class User : Actor
     }
     DirObj[] dirObj;
 
-    UIUser uiUser;
+    UIUser uiUser = null;
+    Animator animator = null;
 
     new void Awake()
     {
         base.Awake();
 
         spriteSize.Set( 1.0f, 1.5f );
-
         SetSprite( "Ahri_SD" );
+        SetAnimation( "Character/Ahri_SD" );
 
         dirObj = new DirObj[ DIRECTION.LTRB_INDEX_MAX ];
         for ( int idx = 0; idx < DIRECTION.LTRB_INDEX_MAX; ++idx )
@@ -50,10 +51,10 @@ public class User : Actor
             }
         }
 
-        GameObject uiObj = new GameObject();
-        uiUser = uiObj.AddComponent<UIUser>();
-        uiUser.SetUser( this );
-        uiObj.transform.SetParent(transform);
+        //GameObject uiObj = new GameObject();
+        //uiUser = uiObj.AddComponent<UIUser>();
+        //uiUser.SetUser( this );
+        //uiObj.transform.SetParent(transform);
     }
 
     // Use this for initialization
@@ -88,6 +89,14 @@ public class User : Actor
     void Move( DirObj dirObj, float speed )
     {
         if ( dirObj.dirCollider.bMovable ) transform.position += dirObj.gameObject.transform.localPosition.normalized * speed;
+    }
+
+    public void ClearDirObj()
+    {
+        foreach ( DirObj iter in dirObj )
+        {
+            iter.dirCollider.bMovable = true;
+        }
     }
 
 }
