@@ -5,16 +5,31 @@ using UnityEngine.UI;
 
 public class UIMainGame : UI
 {
-    GameObject hpObj = null;
-    GameObject hpBgObj = null;
-    RawImage hpImg = null;
-    const float kSpaceY = 0.5f;
-    const float kHpBarBgWidth = 60;
-    const float kHpBarBgHeight = 20;
-    const float kHpBarHeight = 10;
+    const float kHpBarOffsetX = 50.0f;
+    const float kHpBarOffsetY = -10.0f;
+    const float kHpBarBgWidth = 120.0f;
+    const float kHpBarBgHeight = 40.0f + kBarGap;
+    const float kHpBarWidth = kHpBarBgWidth - kBarInternalOffsetX * 2.0f;
+    const float kHpBarHeight = 10.0f;
+    const float kHungerBarHeight = 10.0f;
+    const float kBarGap = 2.0f;
+    const float kBarInternalOffsetX = 5.0f;
+    const float kBarInternalOffsetY = -( kHpBarBgHeight - kHpBarHeight - kHungerBarHeight - kBarGap ) * 0.5f;
 
-    public static Button _buttonEditMode = null;
-    public static Text _textEditMode = null;
+    const float kCurrencyOffsetX = 200.0f;
+    const float kCurrencyOffsetY = -10.0f;
+    const float kCurrencyBgWidth = 120.0f;
+    const float kCurrencyBgHeight = 40.0f;
+    const float kCurrencyImgOffsetX = 10.0f;
+    const float kCurrencyImgOffsetY = -10.0f;
+    const float kCurrencyImgWidth = 20.0f;
+    const float kCurrencyImgHeight = 20.0f;
+    const float kCurrencyTextOffsetX = 60.0f;
+    const float kCurrencyTextOffsetY = -10.0f;
+    const float kCurrencyTextWidth = 50.0f;
+    const float kCurrencyTextHeight = 20.0f;
+
+    private Text currencyText = null;
 
     new void Awake()
     {
@@ -37,26 +52,82 @@ public class UIMainGame : UI
         
     }
 
+    private void FixedUpdate()
+    {
+        ref User.UserStat userStat = ref SceneControl_MainGame._user.GetUserStat();
+        userStat.currency++;
+        currencyText.text = userStat.currency.ToString();
+    }
+
     protected override void MakeComponents()
     {
+        // HP, 배고픔 바 배경
+        GameObject hpBgObj = new GameObject();
+        hpBgObj.name = "HpBarBg";
+        hpBgObj.transform.SetParent( transform );
+        RawImage hpBgImg = hpBgObj.AddComponent<RawImage>();
+        hpBgImg.rectTransform.localPosition = new Vector2( kHpBarOffsetX, kHpBarOffsetY );
+        CustomAnchor( hpBgImg.rectTransform, CUSTOM_ANCHOR.TOP_LEFT );
+        hpBgImg.rectTransform.SetSizeWithCurrentAnchors( RectTransform.Axis.Horizontal, kHpBarBgWidth );
+        hpBgImg.rectTransform.SetSizeWithCurrentAnchors( RectTransform.Axis.Vertical, kHpBarBgHeight );
+        hpBgImg.color = new Color( 1, 1, 1, 0.8f );
+
         // HP 바
-        hpObj = new GameObject();
-        hpObj.transform.SetParent( transform );
+        GameObject hpObj = new GameObject();
         hpObj.name = "HpBar";
-        hpImg = hpObj.AddComponent<RawImage>();
-        hpImg.rectTransform.localPosition = new Vector2( 0, 0 );
-        hpImg.rectTransform.SetSizeWithCurrentAnchors( RectTransform.Axis.Horizontal, kHpBarBgWidth );
+        hpObj.transform.SetParent( transform );
+        RawImage hpImg = hpObj.AddComponent<RawImage>();
+        hpImg.rectTransform.localPosition = new Vector2( kHpBarOffsetX + kBarInternalOffsetX, kHpBarOffsetY + kBarInternalOffsetY );
+        CustomAnchor( hpImg.rectTransform, CUSTOM_ANCHOR.TOP_LEFT );
+        hpImg.rectTransform.SetSizeWithCurrentAnchors( RectTransform.Axis.Horizontal, kHpBarWidth );
         hpImg.rectTransform.SetSizeWithCurrentAnchors( RectTransform.Axis.Vertical, kHpBarHeight );
         hpImg.color = new Color( 0.5f, 0.0f, 0.0f, 0.7f );
 
-        hpBgObj = new GameObject();
-        hpBgObj.transform.SetParent( transform );
-        hpBgObj.name = "HpBarBg";
-        RawImage hpBgImg = hpBgObj.AddComponent<RawImage>();
-        hpBgImg.rectTransform.localPosition = new Vector2( 0, 0 );
-        hpBgImg.rectTransform.SetSizeWithCurrentAnchors( RectTransform.Axis.Horizontal, kHpBarBgWidth );
-        hpBgImg.rectTransform.SetSizeWithCurrentAnchors( RectTransform.Axis.Vertical, kHpBarBgHeight );
-        hpBgImg.color = new Color( 1, 1, 1, 0.2f );
+        // 배고픔 바
+        GameObject hungerObj = new GameObject();
+        hungerObj.name = "HungerBar";
+        hungerObj.transform.SetParent( transform );
+        RawImage hungerImg = hungerObj.AddComponent<RawImage>();
+        hungerImg.transform.localPosition = new Vector2( kHpBarOffsetX + kBarInternalOffsetX, kHpBarOffsetY - kHpBarHeight - kBarGap + kBarInternalOffsetY );
+        CustomAnchor( hungerImg.rectTransform, CUSTOM_ANCHOR.TOP_LEFT );
+        hungerImg.rectTransform.SetSizeWithCurrentAnchors( RectTransform.Axis.Horizontal, kHpBarWidth );
+        hungerImg.rectTransform.SetSizeWithCurrentAnchors( RectTransform.Axis.Vertical, kHungerBarHeight );
+        hungerImg.color = new Color( 0.5f, 0.3f, 0.0f, 0.7f );
+
+        // 재화 창 배경
+        GameObject currencyObj = new GameObject();
+        currencyObj.name = "CurrencyBg";
+        currencyObj.transform.SetParent( transform );
+        RawImage currencyBgImg = currencyObj.AddComponent<RawImage>();
+        currencyBgImg.transform.localPosition = new Vector2( kCurrencyOffsetX, kCurrencyOffsetY );
+        CustomAnchor( currencyBgImg.rectTransform, CUSTOM_ANCHOR.TOP_LEFT );
+        currencyBgImg.rectTransform.SetSizeWithCurrentAnchors( RectTransform.Axis.Horizontal, kCurrencyBgWidth );
+        currencyBgImg.rectTransform.SetSizeWithCurrentAnchors( RectTransform.Axis.Vertical, kCurrencyBgHeight );
+        currencyBgImg.color = new Color( 1, 1, 1, 0.8f );
+
+        // 재화 이미지
+        GameObject currencyImgObj = new GameObject();
+        currencyImgObj.name = "CurrencyImg";
+        currencyImgObj.transform.SetParent( transform );
+        RawImage currencyImg = currencyImgObj.AddComponent<RawImage>();
+        currencyImg.transform.localPosition = new Vector2( kCurrencyOffsetX + kCurrencyImgOffsetX, kCurrencyOffsetY + kCurrencyImgOffsetY );
+        CustomAnchor( currencyImg.rectTransform, CUSTOM_ANCHOR.TOP_LEFT );
+        currencyImg.rectTransform.SetSizeWithCurrentAnchors( RectTransform.Axis.Horizontal, kCurrencyImgWidth );
+        currencyImg.rectTransform.SetSizeWithCurrentAnchors( RectTransform.Axis.Vertical, kCurrencyImgHeight );
+        currencyImg.color = new Color( 0.2f, 0.2f, 0.2f, 0.5f );
+
+        GameObject currencyTextObj = new GameObject();
+        currencyTextObj.name = "CurrencyText";
+        currencyTextObj.transform.SetParent( transform );
+        currencyText = currencyTextObj.AddComponent<Text>();
+        currencyText.transform.localPosition = new Vector2( kCurrencyOffsetX + kCurrencyTextOffsetX, kCurrencyOffsetY + kCurrencyTextOffsetY );
+        CustomAnchor( currencyText.rectTransform, CUSTOM_ANCHOR.TOP_LEFT );
+        currencyText.rectTransform.SetSizeWithCurrentAnchors( RectTransform.Axis.Horizontal, kCurrencyTextWidth );
+        currencyText.rectTransform.SetSizeWithCurrentAnchors( RectTransform.Axis.Vertical, kCurrencyTextHeight );
+        currencyText.font = Resources.GetBuiltinResource<Font>( "Arial.ttf" );
+        currencyText.fontSize = 16;
+        currencyText.color = new Color( 0, 0, 0 );
+        currencyText.text = 0.ToString();
     }
 
 }

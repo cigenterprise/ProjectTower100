@@ -11,9 +11,12 @@ public class User : Actor
     }
     DirObj[] dirObj;
 
-    UIUser uiUser = null;
-    Animator animator = null;
-
+    public struct UserStat
+    {
+        public int currency;
+    }
+    public UserStat userStat;
+    
     new void Awake()
     {
         base.Awake();
@@ -50,11 +53,6 @@ public class User : Actor
                     break;
             }
         }
-
-        //GameObject uiObj = new GameObject();
-        //uiUser = uiObj.AddComponent<UIUser>();
-        //uiUser.SetUser( this );
-        //uiObj.transform.SetParent(transform);
     }
 
     // Use this for initialization
@@ -97,6 +95,11 @@ public class User : Actor
         {
             iter.dirCollider.bMovable = true;
         }
+    }
+
+    public ref UserStat GetUserStat()
+    {
+        return ref userStat;
     }
 
 }
