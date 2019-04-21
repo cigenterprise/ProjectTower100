@@ -12,6 +12,7 @@ public class SceneControl_MainGame : MonoBehaviour
     public static GameObject _uiMainGameObj = null;
     public static GameObject _userObj = null;
     public static GameObject _uiInvenObj = null;
+    public static GameObject m_uiCookObj = null;
     public static User _user = null;
     public static Field _field = null;
     public static Inventory m_inventory = null;
@@ -67,6 +68,10 @@ public class SceneControl_MainGame : MonoBehaviour
             UIInventory uiInven = _uiInvenObj.AddComponent<UIInventory>();
             _uiInvenObj.SetActive( false );
         }
+
+        m_uiCookObj = new GameObject();
+        m_uiCookObj.transform.SetParent( transform );
+        m_uiCookObj.AddComponent<UICook>();
 
         // Field
         GameObject fieldObj = new GameObject();

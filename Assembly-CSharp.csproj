@@ -73,6 +73,7 @@
     <Compile Include="Assets\Scripts\MainGame\Tile.cs" />
     <Compile Include="Assets\Scripts\MainGame\TileEditor.cs" />
     <Compile Include="Assets\Scripts\MainGame\UI.cs" />
+    <Compile Include="Assets\Scripts\MainGame\UICook.cs" />
     <Compile Include="Assets\Scripts\MainGame\UIDialog.cs" />
     <Compile Include="Assets\Scripts\MainGame\UIInventory.cs" />
     <Compile Include="Assets\Scripts\MainGame\UIMainGame.cs" />
