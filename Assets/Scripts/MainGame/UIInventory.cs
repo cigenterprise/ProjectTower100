@@ -29,7 +29,7 @@ public class UIInventory : UI
     // Update is called once per frame
     void Update()
     {
-        
+        if ( Input.GetMouseButtonDown( 0 ) ) OnMouseDown();
     }
 
     protected override void MakeComponents()
@@ -57,7 +57,10 @@ public class UIInventory : UI
         {
             for ( int y = 0; y < kSlotNumRow; ++y )
             {
+                int slotIdx = y * kSlotNumCol + x;
+
                 GameObject slotObj = new GameObject();
+                slotObj.name = $"Slot{slotIdx}";
                 slotObj.transform.SetParent( slotRootObj.transform );
                 slotObj.transform.localPosition = new Vector2( ( kSlotWidth + kSlotGap ) * x + kSlotGap, ( kSlotHeight + kSlotGap ) * y + kSlotGap );
                 RawImage slotImg = slotObj.AddComponent<RawImage>();
@@ -65,8 +68,28 @@ public class UIInventory : UI
                 slotImg.rectTransform.SetSizeWithCurrentAnchors( RectTransform.Axis.Horizontal, kSlotWidth );
                 slotImg.rectTransform.SetSizeWithCurrentAnchors( RectTransform.Axis.Vertical, kSlotHeight );
                 slotImg.color = new Color( 0.0f, 0.0f, 0.5f, 0.4f );
+
+                Inventory inven = SceneControl_MainGame.m_inventory;
+                if ( inven.m_aItem.Count > slotIdx )
+                {
+                    GameObject itemObj = new GameObject();
+                    itemObj.name = $"SlotItem{slotIdx}";
+                    itemObj.transform.SetParent( slotRootObj.transform );
+                    itemObj.transform.localPosition = new Vector2( ( kSlotWidth + kSlotGap ) * x + kSlotGap, ( kSlotHeight + kSlotGap ) * ( kSlotNumRow - y - 1 ) + kSlotGap );
+                    RawImage itemImg = itemObj.AddComponent<RawImage>();
+                    CustomAnchor( itemImg.rectTransform, CUSTOM_ANCHOR.BOTTOM_LEFT );
+                    itemImg.rectTransform.SetSizeWithCurrentAnchors( RectTransform.Axis.Horizontal, kSlotWidth );
+                    itemImg.rectTransform.SetSizeWithCurrentAnchors( RectTransform.Axis.Vertical, kSlotHeight );
+                    itemImg.color = new Color( 1.0f, 0.0f, 0.0f, 0.4f );
+                    BoxCollider2D boxCollider = itemObj.AddComponent<BoxCollider2D>();
+                }
             }
         }
     }
 
+    private void OnMouseDown()
+    {
+        Debug.Log( $"MOUSEDOWN{Input.mousePosition}" );
+        
+    }
 }

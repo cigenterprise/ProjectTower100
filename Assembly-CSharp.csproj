@@ -65,6 +65,7 @@
     <Compile Include="Assets\Scripts\MainGame\Defines.cs" />
     <Compile Include="Assets\Scripts\MainGame\DirCollider.cs" />
     <Compile Include="Assets\Scripts\MainGame\Field.cs" />
+    <Compile Include="Assets\Scripts\MainGame\Inventory.cs" />
     <Compile Include="Assets\Scripts\MainGame\Module_Parse.cs" />
     <Compile Include="Assets\Scripts\MainGame\Npc.cs" />
     <Compile Include="Assets\Scripts\MainGame\SceneControl_MainGame.cs" />

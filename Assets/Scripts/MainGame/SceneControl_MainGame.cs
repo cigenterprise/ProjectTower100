@@ -14,6 +14,7 @@ public class SceneControl_MainGame : MonoBehaviour
     public static GameObject _uiInvenObj = null;
     public static User _user = null;
     public static Field _field = null;
+    public static Inventory m_inventory = null;
     public static bool _editMode = false;
     public static TileEditor _tileEditor = null;
     public static Module_Parse parser = null;
@@ -54,6 +55,10 @@ public class SceneControl_MainGame : MonoBehaviour
             UIMainGame uiMainGame = _uiMainGameObj.AddComponent<UIMainGame>();
             _uiMainGameObj.SetActive( true );
         }
+
+        GameObject invenObj = new GameObject();
+        m_inventory = invenObj.AddComponent<Inventory>();
+        invenObj.transform.SetParent( transform );
 
         if ( !_uiInvenObj )
         {
