@@ -54,7 +54,7 @@ public class UIMainGame : UI
 
     private void FixedUpdate()
     {
-        ref User.UserStat userStat = ref SceneControl_MainGame._user.GetUserStat();
+        ref User.UserStat userStat = ref Control_MainGame._user.GetUserStat();
         userStat.currency++;
         currencyText.text = userStat.currency.ToString();
     }

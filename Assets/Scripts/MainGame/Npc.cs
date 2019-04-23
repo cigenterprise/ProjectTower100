@@ -35,7 +35,7 @@ public class Npc : Actor
     {
         if ( collision.CompareTag( "Actor" ) && ( _typeFlag & TYPEFLAG.DIALOG ) == TYPEFLAG.DIALOG )
         {
-            SceneControl_MainGame._uiDialog.PopUpDialog( "Test.txt" );
+            Control_MainGame._uiDialog.PopUpDialog( "Test.txt" );
         }
     }
 

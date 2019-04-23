@@ -32,16 +32,16 @@ public class UIDialog : UI
     {
         if ( bActive && Input.GetKeyDown( KeyCode.Space ) )
         {
-            bool EOF = !SceneControl_MainGame.parser.parseDialog.Next();
+            bool EOF = !Control_MainGame.parser.parseDialog.Next();
             if ( EOF )
             {
-                SceneControl_MainGame.parser.parseDialog.Clear();
+                Control_MainGame.parser.parseDialog.Clear();
                 bActive = false;
                 gameObject.SetActive( false );
                 return;
             }
 
-            Module_Parse.Parse_Dialog.DlgStruct dlgStruct = SceneControl_MainGame.parser.parseDialog.GetCurrent().Value;
+            Module_Parse.Parse_Dialog.DlgStruct dlgStruct = Control_MainGame.parser.parseDialog.GetCurrent().Value;
             SetText( dlgStruct.speaker + ": " + dlgStruct.script );
         }
     }
@@ -54,17 +54,17 @@ public class UIDialog : UI
     protected override void MakeComponents()
     {
         // 일러스트
-        if (!_illustObj)
+        if ( !_illustObj )
         {
             _illustObj = new GameObject();
-            _illustObj.transform.SetParent(transform);
+            _illustObj.transform.SetParent( transform );
             _illustObj.name = "Illust";
             //_illustObj.transform.localPosition = new Vector2( 0, _canvas.pixelRect.height / 2 );
-            _illustObj.transform.localPosition = new Vector2(0, 0);
+            _illustObj.transform.localPosition = new Vector2( 0, 0 );
             _illust = _illustObj.AddComponent<RawImage>();
-            CustomAnchor(_illust.rectTransform, CUSTOM_ANCHOR.BOTTOM_LEFT);
+            CustomAnchor( _illust.rectTransform, CUSTOM_ANCHOR.BOTTOM_LEFT );
             // 임시
-            SetIllust("Ahri");
+            SetIllust( "Ahri" );
         }
 
         // 대화창
@@ -118,8 +118,8 @@ public class UIDialog : UI
 
     public void PopUpDialog( string fileName )
     {
-        SceneControl_MainGame.parser.ReadFile( "Assets/Resources/Dialog/" + fileName );
-        Module_Parse.Parse_Dialog.DlgStruct dlgStruct = SceneControl_MainGame.parser.parseDialog.GetCurrent().Value;
+        Control_MainGame.parser.ReadFile( "Assets/Resources/Dialog/" + fileName );
+        Module_Parse.Parse_Dialog.DlgStruct dlgStruct = Control_MainGame.parser.parseDialog.GetCurrent().Value;
         SetText( dlgStruct.speaker + ": " + dlgStruct.script );
         gameObject.SetActive( true );
         bActive = true;

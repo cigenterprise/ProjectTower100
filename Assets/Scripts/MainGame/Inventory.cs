@@ -20,8 +20,8 @@ public class Inventory : MonoBehaviour
         AddItem( null );
         AddItem( null );
         AddItem( "MEAT" );
-        AddItem( "CHICKEN" );
-        AddItem( "CHICKEN" );
+        AddItem( "VEGETABLE" );
+        AddItem( "EGG" );
     }
 
     // Start is called before the first frame update

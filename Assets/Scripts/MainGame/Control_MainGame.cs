@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SceneControl_MainGame : MonoBehaviour
+public class Control_MainGame : MonoBehaviour
 {
 
     public static Camera _mainCamera = null;
@@ -13,7 +13,10 @@ public class SceneControl_MainGame : MonoBehaviour
     public static GameObject _userObj = null;
     public static GameObject _uiInvenObj = null;
     public static GameObject m_uiCookObj = null;
+    public static GameObject m_uiBattleObj = null;
+    public static GameObject m_enemyObj = null;
     public static User _user = null;
+    public static Enemy m_enemy = null;
     public static Field _field = null;
     public static Inventory m_inventory = null;
     public static bool _editMode = false;
@@ -23,7 +26,7 @@ public class SceneControl_MainGame : MonoBehaviour
     private void Awake()
     {
         // 이름 설정
-        gameObject.name = "SceneControl";
+        gameObject.name = "Control";
 
         // 카메라 전역설정
         if ( !_mainCamera )
@@ -31,7 +34,7 @@ public class SceneControl_MainGame : MonoBehaviour
             GameObject cameraObj = new GameObject();
             cameraObj.transform.SetParent( transform );
             cameraObj.name = "MainCamera";
-            cameraObj.transform.position = new Vector3( 0, 0, -10 );
+            cameraObj.transform.position = new Vector3( 0, 0, -20 );
             _mainCamera = cameraObj.AddComponent<Camera>();
             _mainCamera.orthographic = true;
             _mainCamera.depth = -1;
@@ -72,6 +75,11 @@ public class SceneControl_MainGame : MonoBehaviour
         m_uiCookObj = new GameObject();
         m_uiCookObj.transform.SetParent( transform );
         m_uiCookObj.AddComponent<UICook>();
+        m_uiCookObj.SetActive( false );
+
+        m_uiBattleObj = new GameObject();
+        m_uiBattleObj.transform.SetParent( transform );
+        m_uiBattleObj.AddComponent<UIBattle>();
 
         // Field
         GameObject fieldObj = new GameObject();
@@ -92,6 +100,12 @@ public class SceneControl_MainGame : MonoBehaviour
         _userObj.name = "User";
         _user = _userObj.AddComponent<User>();
         _user.SetPosition( -1, -1 );
+
+        // Enemy
+        m_enemyObj = new GameObject();
+        m_enemyObj.transform.SetParent( this.transform );
+        m_enemyObj.name = "Enemy";
+        m_enemy = m_enemyObj.AddComponent<Enemy>();
 
         // Parser
         parser = gameObject.AddComponent<Module_Parse>();

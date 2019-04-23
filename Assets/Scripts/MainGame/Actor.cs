@@ -7,7 +7,7 @@ public class Actor : MonoBehaviour
 
     private SpriteRenderer _spriteRenderer = null;
     private GameObject spriteObj = null;
-    protected Vector2 spriteSize = new Vector2( 1, 1 );
+    protected Vector2 spriteSize = Vector2.one;
     protected BoxCollider2D bodyCollider = null;
     private Animator animator = null;
 
@@ -72,5 +72,10 @@ public class Actor : MonoBehaviour
         if ( !animator ) animator = spriteObj.AddComponent<Animator>();
         
         animator.runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>( filePath );
+    }
+
+    public void IncreaseHp( float value )
+    {
+        _stat.hpCurrent -= value;
     }
 }

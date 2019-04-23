@@ -26,7 +26,7 @@ public class UICook : UI
         Recipe recipe = new Recipe();
         recipe.sMaterial0 = "MEAT";
         recipe.nRequired0 = 1;
-        recipe.sMaterial1 = "CHICKEN";
+        recipe.sMaterial1 = "EGG";
         recipe.nRequired1 = 5;
         m_aRecipe.Add( recipe );
 
@@ -53,7 +53,7 @@ public class UICook : UI
     {
         GameObject prefabObj = Instantiate( Resources.Load( "UI/Prefab/UICook_bg" ) as GameObject );
         prefabObj.transform.SetParent( this.transform );
-        prefabObj.transform.localPosition = new Vector2( 0, 0 );
+        prefabObj.transform.localPosition = Vector2.zero;
 
         MakeButtons( prefabObj );
     }
@@ -99,8 +99,8 @@ public class UICook : UI
             return;
         }
 
-        int nMaterial0 = SceneControl_MainGame.m_inventory.FindItems( recipe.sMaterial0 );
-        int nMaterial1 = SceneControl_MainGame.m_inventory.FindItems( recipe.sMaterial1 );
+        int nMaterial0 = Control_MainGame.m_inventory.FindItems( recipe.sMaterial0 );
+        int nMaterial1 = Control_MainGame.m_inventory.FindItems( recipe.sMaterial1 );
 
         m_inputText0.text = $"필요 수량 {recipe.nRequired0}\n보유 수량 {nMaterial0}";
         m_inputText1.text = $"필요 수량 {recipe.nRequired1}\n보유 수량 {nMaterial1}";
@@ -120,18 +120,19 @@ public class UICook : UI
             return;
         }
 
-        int nMaterial0 = SceneControl_MainGame.m_inventory.FindItems( recipe.sMaterial0 );
-        int nMaterial1 = SceneControl_MainGame.m_inventory.FindItems( recipe.sMaterial1 );
+        int nMaterial0 = Control_MainGame.m_inventory.FindItems( recipe.sMaterial0 );
+        int nMaterial1 = Control_MainGame.m_inventory.FindItems( recipe.sMaterial1 );
 
         if ( recipe.nRequired0 > nMaterial0 || recipe.nRequired1 > nMaterial1 )
         {
+            Debug.Log( "Insufficient materials" );
             // 재료부족
             return;
         }
 
         for ( int iter = 0; iter < recipe.nRequired0; ++iter )
-            SceneControl_MainGame.m_inventory.RemoveItem( recipe.sMaterial0 );
+            Control_MainGame.m_inventory.RemoveItem( recipe.sMaterial0 );
         for ( int iter = 0; iter < recipe.nRequired1; ++iter )
-            SceneControl_MainGame.m_inventory.RemoveItem( recipe.sMaterial1 );
+            Control_MainGame.m_inventory.RemoveItem( recipe.sMaterial1 );
     }
 }

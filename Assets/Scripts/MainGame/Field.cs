@@ -32,7 +32,7 @@ public class Field : MonoBehaviour
         fieldObj = Instantiate( prefab );
         ++currentField;
 
-        if ( SceneControl_MainGame._user ) SceneControl_MainGame._user.ClearDirObj();
+        if ( Control_MainGame._user ) Control_MainGame._user.ClearDirObj();
     }
 
 }

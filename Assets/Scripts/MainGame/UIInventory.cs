@@ -69,7 +69,7 @@ public class UIInventory : UI
                 slotImg.rectTransform.SetSizeWithCurrentAnchors( RectTransform.Axis.Vertical, kSlotHeight );
                 slotImg.color = new Color( 0.0f, 0.0f, 0.5f, 0.4f );
 
-                Inventory inven = SceneControl_MainGame.m_inventory;
+                Inventory inven = Control_MainGame.m_inventory;
                 if ( inven.m_aItem.Count > slotIdx )
                 {
                     GameObject itemObj = new GameObject();

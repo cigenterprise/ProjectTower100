@@ -37,7 +37,7 @@ public class SlidePuzzle : MonoBehaviour
     private void OnMouseDown()
     {
         Vector3 mousePos = Input.mousePosition;
-        Camera camera = SceneControl_MainGame._mainCamera;
+        Camera camera = Control_MainGame._mainCamera;
         mousePos = camera.ScreenToWorldPoint( mousePos );
 
         for ( int idx = 0; idx < _puzzles.transform.childCount; ++idx )
