@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class UIMainGame : UI
 {
+    RawImage m_hpImg = null;
+
     const float kHpBarOffsetX = 50.0f;
     const float kHpBarOffsetY = -10.0f;
     const float kHpBarBgWidth = 120.0f;
@@ -57,6 +59,8 @@ public class UIMainGame : UI
         ref User.UserStat userStat = ref Control_MainGame._user.GetUserStat();
         userStat.currency++;
         currencyText.text = userStat.currency.ToString();
+
+        UpdateHpBar();
     }
 
     protected override void MakeComponents()
@@ -76,12 +80,12 @@ public class UIMainGame : UI
         GameObject hpObj = new GameObject();
         hpObj.name = "HpBar";
         hpObj.transform.SetParent( transform );
-        RawImage hpImg = hpObj.AddComponent<RawImage>();
-        hpImg.rectTransform.localPosition = new Vector2( kHpBarOffsetX + kBarInternalOffsetX, kHpBarOffsetY + kBarInternalOffsetY );
-        CustomAnchor( hpImg.rectTransform, CUSTOM_ANCHOR.TOP_LEFT );
-        hpImg.rectTransform.SetSizeWithCurrentAnchors( RectTransform.Axis.Horizontal, kHpBarWidth );
-        hpImg.rectTransform.SetSizeWithCurrentAnchors( RectTransform.Axis.Vertical, kHpBarHeight );
-        hpImg.color = new Color( 0.5f, 0.0f, 0.0f, 0.7f );
+        m_hpImg = hpObj.AddComponent<RawImage>();
+        m_hpImg.rectTransform.localPosition = new Vector2( kHpBarOffsetX + kBarInternalOffsetX, kHpBarOffsetY + kBarInternalOffsetY );
+        CustomAnchor( m_hpImg.rectTransform, CUSTOM_ANCHOR.TOP_LEFT );
+        m_hpImg.rectTransform.SetSizeWithCurrentAnchors( RectTransform.Axis.Horizontal, kHpBarWidth );
+        m_hpImg.rectTransform.SetSizeWithCurrentAnchors( RectTransform.Axis.Vertical, kHpBarHeight );
+        m_hpImg.color = new Color( 0.5f, 0.0f, 0.0f, 0.7f );
 
         // 배고픔 바
         GameObject hungerObj = new GameObject();
@@ -128,6 +132,12 @@ public class UIMainGame : UI
         currencyText.fontSize = 16;
         currencyText.color = new Color( 0, 0, 0 );
         currencyText.text = 0.ToString();
+    }
+
+    void UpdateHpBar()
+    {
+        User.Stat stat = Control_MainGame._user.m_stat;
+        m_hpImg.rectTransform.SetSizeWithCurrentAnchors( RectTransform.Axis.Horizontal, kHpBarWidth * stat.fCHP / stat.fMHP );
     }
 
 }

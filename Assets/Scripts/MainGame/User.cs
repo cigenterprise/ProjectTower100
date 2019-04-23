@@ -21,7 +21,7 @@ public class User : Actor
     {
         base.Awake();
 
-        spriteSize.Set( 1.0f, 1.5f );
+        m_spriteSize.Set( 1.0f, 1.5f );
         SetSprite( "Ahri_SD" );
         SetAnimation( "Character/Ahri_SD" );
 
@@ -34,19 +34,19 @@ public class User : Actor
             switch ( idx )
             {
                 case DIRECTION.LEFT:
-                    dirObj[ idx ].gameObject.transform.localPosition = DIRECTION.LEFT_VEC2 * dirObj[ idx ].dirCollider.colliderSize - new Vector2( bodyCollider.size.x / 2, 0 ) ;
+                    dirObj[ idx ].gameObject.transform.localPosition = DIRECTION.LEFT_VEC2 * dirObj[ idx ].dirCollider.colliderSize - new Vector2( m_bodyCollider.size.x / 2, 0 ) ;
                     dirObj[ idx ].gameObject.name = "Collider_Left";
                     break;
                 case DIRECTION.TOP:
-                    dirObj[ idx ].gameObject.transform.localPosition = DIRECTION.TOP_VEC2 * dirObj[ idx ].dirCollider.colliderSize + new Vector2( 0, bodyCollider.size.y / 2 );
+                    dirObj[ idx ].gameObject.transform.localPosition = DIRECTION.TOP_VEC2 * dirObj[ idx ].dirCollider.colliderSize + new Vector2( 0, m_bodyCollider.size.y / 2 );
                     dirObj[ idx ].gameObject.name = "Collider_Top";
                     break;
                 case DIRECTION.RIGHT:
-                    dirObj[ idx ].gameObject.transform.localPosition = DIRECTION.RIGHT_VEC2 * dirObj[ idx ].dirCollider.colliderSize + new Vector2( bodyCollider.size.x / 2, 0 );
+                    dirObj[ idx ].gameObject.transform.localPosition = DIRECTION.RIGHT_VEC2 * dirObj[ idx ].dirCollider.colliderSize + new Vector2( m_bodyCollider.size.x / 2, 0 );
                     dirObj[ idx ].gameObject.name = "Collider_Right";
                     break;
                 case DIRECTION.BOTTOM:
-                    dirObj[ idx ].gameObject.transform.localPosition = DIRECTION.BOTTOM_VEC2 * dirObj[ idx ].dirCollider.colliderSize - new Vector2( 0, bodyCollider.size.y / 2 );
+                    dirObj[ idx ].gameObject.transform.localPosition = DIRECTION.BOTTOM_VEC2 * dirObj[ idx ].dirCollider.colliderSize - new Vector2( 0, m_bodyCollider.size.y / 2 );
                     dirObj[ idx ].gameObject.name = "Collider_Bottom";
                     break;
                 default:
@@ -66,21 +66,21 @@ public class User : Actor
     {
         if ( Input.GetKey( KeyCode.RightArrow ) )
         {
-            Move( dirObj[ DIRECTION.RIGHT ], _stat.moveSpeed );
+            Move( dirObj[ DIRECTION.RIGHT ], m_stat.fVEL );
             transform.localScale = new Vector3( 1, 1, 1 );
         }
         if ( Input.GetKey( KeyCode.LeftArrow ) )
         {
-            Move( dirObj[ DIRECTION.LEFT ], _stat.moveSpeed );
+            Move( dirObj[ DIRECTION.LEFT ], m_stat.fVEL );
             //transform.localScale = new Vector3( -1, 1, 1 );
         }
         if ( Input.GetKey( KeyCode.UpArrow ) )
         {
-            Move( dirObj[ DIRECTION.TOP ], _stat.moveSpeed );
+            Move( dirObj[ DIRECTION.TOP ], m_stat.fVEL );
         }
         if ( Input.GetKey( KeyCode.DownArrow ) )
         {
-            Move( dirObj[ DIRECTION.BOTTOM ], _stat.moveSpeed );
+            Move( dirObj[ DIRECTION.BOTTOM ], m_stat.fVEL );
         }
     }
 

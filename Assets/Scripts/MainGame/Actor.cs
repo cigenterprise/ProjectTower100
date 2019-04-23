@@ -5,38 +5,39 @@ using UnityEngine;
 public class Actor : MonoBehaviour
 {
 
-    private SpriteRenderer _spriteRenderer = null;
-    private GameObject spriteObj = null;
-    protected Vector2 spriteSize = Vector2.one;
-    protected BoxCollider2D bodyCollider = null;
-    private Animator animator = null;
+    private SpriteRenderer m_spriteRenderer = null;
+    private GameObject m_spriteObj = null;
+    protected Vector2 m_spriteSize = Vector2.one;
+    protected BoxCollider2D m_bodyCollider = null;
+    private Animator m_animator = null;
 
     [System.Serializable]
     public class Stat
     {
-        public float moveSpeed = 0.1f;
-        public float hpCurrent = 10.0f;
-        public float hpMax = 10.0f;
-        public float hungerCurrent = 10.0f;
-        public float hungerMax = 10.0f;
+        public float fVEL   = 0.1f;     // Velocity
+        public float fCHP   = 10.0f;    // Current HP
+        public float fMHP   = 10.0f;    // Max HP
+        public float fCH    = 10.0f;    // Current Hunger
+        public float fMH    = 10.0f;    // Max Hunger
+        public float fADB   = 1.0f;     // Attack Damage Base
     }
-    public Stat _stat = new Stat();
+    public Stat m_stat = new Stat();
 
     protected void Awake()
     {
-        spriteObj = new GameObject();
-        spriteObj.name = "Sprite";
-        spriteObj.transform.SetParent(transform);
-        RectTransform spriteTfm = spriteObj.AddComponent<RectTransform>();
+        m_spriteObj = new GameObject();
+        m_spriteObj.name = "Sprite";
+        m_spriteObj.transform.SetParent(transform);
+        RectTransform spriteTfm = m_spriteObj.AddComponent<RectTransform>();
         spriteTfm.localScale = new Vector3( 1, 1, 1 );
-        _spriteRenderer = spriteObj.AddComponent<SpriteRenderer>();
-        _spriteRenderer.drawMode = SpriteDrawMode.Sliced;
+        m_spriteRenderer = m_spriteObj.AddComponent<SpriteRenderer>();
+        m_spriteRenderer.drawMode = SpriteDrawMode.Sliced;
         SetSprite( "hitEffect" );
 
-        bodyCollider = gameObject.AddComponent<BoxCollider2D>();
-        bodyCollider.size = new Vector2( 1, 1 );
-        bodyCollider.isTrigger = true;
-        bodyCollider.tag = "Actor";
+        m_bodyCollider = gameObject.AddComponent<BoxCollider2D>();
+        m_bodyCollider.size = new Vector2( 1, 1 );
+        m_bodyCollider.isTrigger = true;
+        m_bodyCollider.tag = "Actor";
 
         Rigidbody2D rigidBody = gameObject.AddComponent<Rigidbody2D>();
         rigidBody.bodyType = RigidbodyType2D.Static;
@@ -63,19 +64,19 @@ public class Actor : MonoBehaviour
 
     public void SetSprite( string filePath )
     {
-        _spriteRenderer.sprite = Resources.Load<Sprite>( filePath );
-        _spriteRenderer.size = spriteSize;
+        m_spriteRenderer.sprite = Resources.Load<Sprite>( filePath );
+        m_spriteRenderer.size = m_spriteSize;
     }
 
     public void SetAnimation( string filePath )
     {
-        if ( !animator ) animator = spriteObj.AddComponent<Animator>();
+        if ( !m_animator ) m_animator = m_spriteObj.AddComponent<Animator>();
         
-        animator.runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>( filePath );
+        m_animator.runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>( filePath );
     }
 
     public void IncreaseHp( float value )
     {
-        _stat.hpCurrent -= value;
+        m_stat.fCHP -= value;
     }
 }
