@@ -56,7 +56,7 @@ public class UIMainGame : UI
 
     private void FixedUpdate()
     {
-        ref User.UserStat userStat = ref Control_MainGame._user.GetUserStat();
+        ref User.UserStat userStat = ref Control_MainGame.m_user.GetUserStat();
         userStat.currency++;
         currencyText.text = userStat.currency.ToString();
 
@@ -136,7 +136,7 @@ public class UIMainGame : UI
 
     void UpdateHpBar()
     {
-        User.Stat stat = Control_MainGame._user.m_stat;
+        User.Stat stat = Control_MainGame.m_user.m_stat;
         m_hpImg.rectTransform.SetSizeWithCurrentAnchors( RectTransform.Axis.Horizontal, kHpBarWidth * stat.fCHP / stat.fMHP );
     }
 

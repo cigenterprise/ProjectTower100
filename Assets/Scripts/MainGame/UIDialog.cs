@@ -32,16 +32,16 @@ public class UIDialog : UI
     {
         if ( bActive && Input.GetKeyDown( KeyCode.Space ) )
         {
-            bool EOF = !Control_MainGame.parser.parseDialog.Next();
+            bool EOF = !Control_MainGame.m_parser.parseDialog.Next();
             if ( EOF )
             {
-                Control_MainGame.parser.parseDialog.Clear();
+                Control_MainGame.m_parser.parseDialog.Clear();
                 bActive = false;
                 gameObject.SetActive( false );
                 return;
             }
 
-            Module_Parse.Parse_Dialog.DlgStruct dlgStruct = Control_MainGame.parser.parseDialog.GetCurrent().Value;
+            Module_Parse.Parse_Dialog.DlgStruct dlgStruct = Control_MainGame.m_parser.parseDialog.GetCurrent().Value;
             SetText( dlgStruct.speaker + ": " + dlgStruct.script );
         }
     }
@@ -118,8 +118,8 @@ public class UIDialog : UI
 
     public void PopUpDialog( string fileName )
     {
-        Control_MainGame.parser.ReadFile( "Assets/Resources/Dialog/" + fileName );
-        Module_Parse.Parse_Dialog.DlgStruct dlgStruct = Control_MainGame.parser.parseDialog.GetCurrent().Value;
+        Control_MainGame.m_parser.ReadFile( "Assets/Resources/Dialog/" + fileName );
+        Module_Parse.Parse_Dialog.DlgStruct dlgStruct = Control_MainGame.m_parser.parseDialog.GetCurrent().Value;
         SetText( dlgStruct.speaker + ": " + dlgStruct.script );
         gameObject.SetActive( true );
         bActive = true;

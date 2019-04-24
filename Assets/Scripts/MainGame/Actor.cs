@@ -29,13 +29,14 @@ public class Actor : MonoBehaviour
         m_spriteObj.name = "Sprite";
         m_spriteObj.transform.SetParent(transform);
         RectTransform spriteTfm = m_spriteObj.AddComponent<RectTransform>();
-        spriteTfm.localScale = new Vector3( 1, 1, 1 );
+        spriteTfm.localScale = Vector3.one;
+        spriteTfm.localPosition = new Vector3( 0, 0, LAYERZ.ACTOR );
         m_spriteRenderer = m_spriteObj.AddComponent<SpriteRenderer>();
         m_spriteRenderer.drawMode = SpriteDrawMode.Sliced;
         SetSprite( "hitEffect" );
 
         m_bodyCollider = gameObject.AddComponent<BoxCollider2D>();
-        m_bodyCollider.size = new Vector2( 1, 1 );
+        m_bodyCollider.size = Vector2.one;
         m_bodyCollider.isTrigger = true;
         m_bodyCollider.tag = "Actor";
 

@@ -6,109 +6,91 @@ using UnityEngine.UI;
 public class Control_MainGame : MonoBehaviour
 {
 
-    public static Camera _mainCamera = null;
-    public static GameObject _uiDialogObj = null;
-    public static UIDialog _uiDialog = null;
-    public static GameObject _uiMainGameObj = null;
-    public static GameObject _userObj = null;
-    public static GameObject _uiInvenObj = null;
+    public static Camera m_mainCamera = null;
+    public static GameObject m_uiDialogObj = null;
+    public static UIDialog m_uiDialog = null;
+    public static GameObject m_uiMainGameObj = null;
+    public static GameObject m_userObj = null;
+    public static GameObject m_uiInvenObj = null;
     public static GameObject m_uiCookObj = null;
     public static GameObject m_uiBattleObj = null;
-    public static GameObject m_enemyObj = null;
-    public static User _user = null;
-    public static Enemy m_enemy = null;
-    public static Field _field = null;
+    public static GameObject m_cutSceneObj = null;
+    public static User m_user = null;
+    public static Field m_field = null;
     public static Inventory m_inventory = null;
-    public static bool _editMode = false;
-    public static TileEditor _tileEditor = null;
-    public static Module_Parse parser = null;
+    public static bool m_bEditMode = false;
+    public static TileEditor m_tileEditor = null;
+    public static Module_Parse m_parser = null;
 
     private void Awake()
     {
         // 이름 설정
-        gameObject.name = "Control";
+        name = "Control";
 
         // 카메라 전역설정
-        if ( !_mainCamera )
-        {
-            GameObject cameraObj = new GameObject();
-            cameraObj.transform.SetParent( transform );
-            cameraObj.name = "MainCamera";
-            cameraObj.transform.position = new Vector3( 0, 0, -20 );
-            _mainCamera = cameraObj.AddComponent<Camera>();
-            _mainCamera.orthographic = true;
-            _mainCamera.depth = -1;
-            // 오디오 리스너
-            AudioListener audioListener = cameraObj.AddComponent<AudioListener>();
-        }
+        GameObject cameraObj = new GameObject();
+        cameraObj.transform.SetParent( transform );
+        cameraObj.name = "MainCamera";
+        cameraObj.transform.position = new Vector3( 0, 0, -20 );
+        m_mainCamera = cameraObj.AddComponent<Camera>();
+        m_mainCamera.orthographic = true;
+        m_mainCamera.depth = -1;
+        // 오디오 리스너
+        AudioListener audioListener = cameraObj.AddComponent<AudioListener>();
 
         // 대화창 UI
-        if ( !_uiDialogObj )
-        {
-            _uiDialogObj = new GameObject();
-            _uiDialogObj.transform.SetParent( transform );
-            _uiDialog = _uiDialogObj.AddComponent<UIDialog>();
-            _uiDialogObj.SetActive( false );
-        }
+        m_uiDialogObj = new GameObject();
+        m_uiDialogObj.transform.SetParent( transform );
+        m_uiDialog = m_uiDialogObj.AddComponent<UIDialog>();
+        m_uiDialogObj.SetActive( false );
 
         // 메인게임 UI
-        if ( !_uiMainGameObj )
-        {
-            _uiMainGameObj = new GameObject();
-            _uiMainGameObj.transform.SetParent( transform );
-            UIMainGame uiMainGame = _uiMainGameObj.AddComponent<UIMainGame>();
-            _uiMainGameObj.SetActive( true );
-        }
+        m_uiMainGameObj = new GameObject();
+        m_uiMainGameObj.transform.SetParent( transform );
+        UIMainGame uiMainGame = m_uiMainGameObj.AddComponent<UIMainGame>();
+        m_uiMainGameObj.SetActive( true );
 
+        // 인벤토리, UI
         GameObject invenObj = new GameObject();
         m_inventory = invenObj.AddComponent<Inventory>();
         invenObj.transform.SetParent( transform );
 
-        if ( !_uiInvenObj )
-        {
-            _uiInvenObj = new GameObject();
-            _uiInvenObj.transform.SetParent( transform );
-            UIInventory uiInven = _uiInvenObj.AddComponent<UIInventory>();
-            _uiInvenObj.SetActive( false );
-        }
+        m_uiInvenObj = new GameObject();
+        m_uiInvenObj.transform.SetParent( transform );
+        UIInventory uiInven = m_uiInvenObj.AddComponent<UIInventory>();
+        m_uiInvenObj.SetActive( false );
 
+        // 요리 UI
         m_uiCookObj = new GameObject();
         m_uiCookObj.transform.SetParent( transform );
         m_uiCookObj.AddComponent<UICook>();
         m_uiCookObj.SetActive( false );
 
+        // 전투 UI
         m_uiBattleObj = new GameObject();
         m_uiBattleObj.transform.SetParent( transform );
         m_uiBattleObj.AddComponent<UIBattle>();
+        m_uiBattleObj.SetActive( false );
 
         // Field
         GameObject fieldObj = new GameObject();
         fieldObj.transform.SetParent( transform );
-        fieldObj.name = "Field";
-        _field = fieldObj.AddComponent<Field>();
-
-        // NPC
-        GameObject npcObj = new GameObject();
-        npcObj.transform.SetParent( transform );
-        npcObj.name = "Npc";
-        Npc npc = npcObj.AddComponent<Npc>();
-        npc.SetPosition( 2, 1 );
+        m_field = fieldObj.AddComponent<Field>();
 
         // User
-        _userObj = new GameObject();
-        _userObj.transform.SetParent( transform );
-        _userObj.name = "User";
-        _user = _userObj.AddComponent<User>();
-        _user.SetPosition( -1, -1 );
-
-        // Enemy
-        m_enemyObj = new GameObject();
-        m_enemyObj.transform.SetParent( this.transform );
-        m_enemyObj.name = "Enemy";
-        m_enemy = m_enemyObj.AddComponent<Enemy>();
+        m_userObj = new GameObject();
+        m_userObj.transform.SetParent( transform );
+        m_user = m_userObj.AddComponent<User>();
+        m_user.SetPosition( -1, -1 );
 
         // Parser
-        parser = gameObject.AddComponent<Module_Parse>();
+        m_parser = gameObject.AddComponent<Module_Parse>();
+
+        // Prologue CutScene
+        m_cutSceneObj = new GameObject();
+        m_cutSceneObj.transform.SetParent( this.transform );
+        m_cutSceneObj.transform.localPosition = Vector2.zero;
+        m_cutSceneObj.AddComponent<CutScene>();
     }
 
     // Use this for initialization
@@ -120,7 +102,7 @@ public class Control_MainGame : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if ( Input.GetKeyDown( KeyCode.I ) ) _uiInvenObj.SetActive( !_uiInvenObj.activeSelf );
+        if ( Input.GetKeyDown( KeyCode.I ) ) m_uiInvenObj.SetActive( !m_uiInvenObj.activeSelf );
     }
 
 }

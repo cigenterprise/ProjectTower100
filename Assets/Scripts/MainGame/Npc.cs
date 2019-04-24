@@ -4,19 +4,23 @@ using UnityEngine;
 
 public class Npc : Actor
 {
+    public string Type = "Default";
 
     public static class TYPEFLAG
     {
-        public const int DEFAULT = 0x00;
-        public const int DIALOG = 0x01;
+        public const int DEFAULT    = 0x00;
+        public const int DIALOG     = 0x01;
+        public const int COOK       = 0x02;
     }
-    int _typeFlag = TYPEFLAG.DEFAULT;
+    int m_typeFlag = TYPEFLAG.DEFAULT;
 
     new void Awake()
     {
         base.Awake();
 
-        _typeFlag = TYPEFLAG.DIALOG;
+        name = "Npc_" + Type;
+
+        m_typeFlag = GetNpcType();
     }
 
     // Use this for initialization
@@ -33,9 +37,16 @@ public class Npc : Actor
 
     void OnTriggerEnter2D( Collider2D collision )
     {
-        if ( collision.CompareTag( "Actor" ) && ( _typeFlag & TYPEFLAG.DIALOG ) == TYPEFLAG.DIALOG )
+        if ( collision.CompareTag( "Actor" ) )
         {
-            Control_MainGame._uiDialog.PopUpDialog( "Test.txt" );
+            if ( ( m_typeFlag & TYPEFLAG.DIALOG ) == TYPEFLAG.DIALOG )
+            {
+                Control_MainGame.m_uiDialog.PopUpDialog( "Test.txt" );
+            }
+            if ( ( m_typeFlag & TYPEFLAG.COOK ) == TYPEFLAG.COOK )
+            {
+                Control_MainGame.m_uiCookObj.SetActive( true );
+            }
         }
     }
 
@@ -45,6 +56,14 @@ public class Npc : Actor
         gameObject.name = "SlidePuzzle";
         gameObject.AddComponent<SlidePuzzle>();
         gameObject.transform.SetParent( transform.parent );
+    }
+
+    int GetNpcType()
+    {
+        if ( Type.Equals( "Dialog" ) ) return TYPEFLAG.DIALOG;
+        if ( Type.Equals( "Cook" ) ) return TYPEFLAG.COOK;
+
+        return TYPEFLAG.DEFAULT;
     }
 
 }

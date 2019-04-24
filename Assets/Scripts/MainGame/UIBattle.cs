@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class UIBattle : UI
 {
+    Enemy       m_currentEnemy          = null;
     Dice        m_dice                  = null;
     bool        m_bRollStart            = false;
     bool        m_bRolling              = false;
@@ -22,7 +23,7 @@ public class UIBattle : UI
     {
         base.Awake();
 
-        gameObject.name = "UIBattle";
+        name = "UIBattle";
 
         MakeComponents();
     }
@@ -119,11 +120,17 @@ public class UIBattle : UI
         }
     }
 
+    public void SetEnemy( Enemy enemy )
+    {
+        m_currentEnemy = enemy;
+    }
+
     void UpdateBattleInfo()
     {
-        Enemy enemy = Control_MainGame.m_enemy;
-        m_enemyName.text = "이름 " + enemy.name;
-        m_enemyHp.text = "HP " + enemy.m_stat.fCHP + "/" + enemy.m_stat.fMHP;
+        if ( m_currentEnemy == null ) Debug.Log( "[UIBattle] m_currentEnemy is not set" );
+        
+        m_enemyName.text = "이름 " + m_currentEnemy.name;
+        m_enemyHp.text = "HP " + m_currentEnemy.m_stat.fCHP + "/" + m_currentEnemy.m_stat.fMHP;
     }
 
     void UpdateRollGauge()
@@ -138,22 +145,22 @@ public class UIBattle : UI
 
     void ExecuteRollResult( int nResult )
     {
-        float fBaseDamage = Control_MainGame.m_enemy.m_stat.fADB;
+        float fBaseDamage = m_currentEnemy.m_stat.fADB;
         switch ( nResult )
         {
             case 1:
                 break;
             case 2:
-                Control_MainGame._user.IncreaseHp( fBaseDamage * 0.5f );
+                m_currentEnemy.IncreaseHp( fBaseDamage * 0.5f );
                 break;
             case 3:
-                Control_MainGame._user.IncreaseHp( fBaseDamage );
+                m_currentEnemy.IncreaseHp( fBaseDamage );
                 break;
             case 4:
-                Control_MainGame._user.IncreaseHp( fBaseDamage * 1.2f );
+                m_currentEnemy.IncreaseHp( fBaseDamage * 1.2f );
                 break;
             case 5:
-                Control_MainGame._user.IncreaseHp( fBaseDamage ); // 공격 후 회피 버프 추가해야함
+                m_currentEnemy.IncreaseHp( fBaseDamage ); // 공격 후 회피 버프 추가해야함
                 break;
             case 6:
                 // 마법 공격

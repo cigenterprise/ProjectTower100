@@ -21,6 +21,8 @@ public class User : Actor
     {
         base.Awake();
 
+        gameObject.name = "User";
+
         m_spriteSize.Set( 1.0f, 1.5f );
         SetSprite( "Ahri_SD" );
         SetAnimation( "Character/Ahri_SD" );

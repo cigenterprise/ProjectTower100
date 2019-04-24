@@ -10,6 +10,8 @@ public class Field : MonoBehaviour
 
     void Awake()
     {
+        gameObject.name = "Field";
+
         LoadNextFloor();
     }
 
@@ -32,7 +34,7 @@ public class Field : MonoBehaviour
         fieldObj = Instantiate( prefab );
         ++currentField;
 
-        if ( Control_MainGame._user ) Control_MainGame._user.ClearDirObj();
+        if ( Control_MainGame.m_user ) Control_MainGame.m_user.ClearDirObj();
     }
 
 }

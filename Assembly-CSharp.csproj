@@ -68,6 +68,7 @@
     <Compile Include="Assets\Scripts\Intro\Control_Intro.cs" />
     <Compile Include="Assets\Scripts\MainGame\Actor.cs" />
     <Compile Include="Assets\Scripts\MainGame\Control_MainGame.cs" />
+    <Compile Include="Assets\Scripts\MainGame\CutScene.cs" />
     <Compile Include="Assets\Scripts\MainGame\Defines.cs" />
     <Compile Include="Assets\Scripts\MainGame\DirCollider.cs" />
     <Compile Include="Assets\Scripts\MainGame\Enemy.cs" />

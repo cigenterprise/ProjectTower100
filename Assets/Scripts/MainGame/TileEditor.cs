@@ -105,7 +105,7 @@ public class TileEditor : MonoBehaviour
         }
 
         RaycastHit hitInfo;
-        Ray ray = Control_MainGame._mainCamera.ScreenPointToRay( Input.mousePosition );
+        Ray ray = Control_MainGame.m_mainCamera.ScreenPointToRay( Input.mousePosition );
         if ( Physics.Raycast( ray.origin, ray.direction * 10, out hitInfo ) )
         {
             foreach ( GameObject tileObj in _tiles )
@@ -123,13 +123,13 @@ public class TileEditor : MonoBehaviour
 
     void UpdateEditMode()
     {
-        if ( Control_MainGame._editMode )
+        if ( Control_MainGame.m_bEditMode )
         {
             if ( Input.GetMouseButtonUp( 0 ) ) MouseHitTest();
 
             if ( _selectedTile )
             {
-                Vector3 mousePos = Control_MainGame._mainCamera.ScreenToWorldPoint( Input.mousePosition );
+                Vector3 mousePos = Control_MainGame.m_mainCamera.ScreenToWorldPoint( Input.mousePosition );
                 _selectedTile.transform.position = new Vector3( Mathf.Round( mousePos.x ), Mathf.Round( mousePos.y ), 0 );
 
                 if ( Input.mouseScrollDelta.y > 0 )

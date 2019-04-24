@@ -15,3 +15,9 @@ public static class DIRECTION
     public const int BOTTOM = 3;
     public const int LTRB_INDEX_MAX = 4;
 }
+
+public static class LAYERZ
+{
+    public const float FLOOR = 0.0f;
+    public const float ACTOR = -0.1f;
+}
