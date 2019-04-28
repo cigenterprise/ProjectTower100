@@ -103,12 +103,13 @@ public class UIBattle : UI
     {
         if ( !m_bRollStart )
         {
+            Dice.Clear();
+
             m_bRollStart = true;
+            m_bRolling = false;
         }
         else
         {
-            Dice.Clear();
-
             Vector3 spawnPoint = new Vector3( 0, 0, -7 );
 
             Dice.Roll( "1d6", "d6-red-dots", spawnPoint, Vector3.zero, 0.5f );
@@ -166,5 +167,10 @@ public class UIBattle : UI
                 // 마법 공격
                 break;
         }
+    }
+
+    public override void Refresh()
+    {
+        
     }
 }

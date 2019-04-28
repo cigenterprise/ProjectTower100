@@ -17,6 +17,7 @@ public class Control_MainGame : MonoBehaviour
     public static GameObject m_cutSceneObj = null;
     public static User m_user = null;
     public static Field m_field = null;
+    public static UIInventory m_uiInven = null;
     public static Inventory m_inventory = null;
     public static bool m_bEditMode = false;
     public static TileEditor m_tileEditor = null;
@@ -57,7 +58,7 @@ public class Control_MainGame : MonoBehaviour
 
         m_uiInvenObj = new GameObject();
         m_uiInvenObj.transform.SetParent( transform );
-        UIInventory uiInven = m_uiInvenObj.AddComponent<UIInventory>();
+        m_uiInven = m_uiInvenObj.AddComponent<UIInventory>();
         m_uiInvenObj.SetActive( false );
 
         // 요리 UI
@@ -102,7 +103,11 @@ public class Control_MainGame : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if ( Input.GetKeyDown( KeyCode.I ) ) m_uiInvenObj.SetActive( !m_uiInvenObj.activeSelf );
+        if ( Input.GetKeyDown( KeyCode.I ) )
+        {
+            m_uiInven.Refresh();
+            m_uiInvenObj.SetActive( !m_uiInvenObj.activeSelf );
+        }
     }
 
 }

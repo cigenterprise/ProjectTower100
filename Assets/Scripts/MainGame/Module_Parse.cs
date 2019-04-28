@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using System.Text;
 
 public class Module_Parse : MonoBehaviour
 {
@@ -22,7 +23,7 @@ public class Module_Parse : MonoBehaviour
         
         public void Open( string filePath )
         {
-            dlgArr = File.ReadAllLines( filePath );
+            dlgArr = File.ReadAllLines( filePath, Encoding.Default );
         }
 
         public bool Next()
@@ -35,7 +36,14 @@ public class Module_Parse : MonoBehaviour
         public DlgStruct? GetCurrent()
         {
             string[] split = dlgArr[ dlgIdx ].Split( ':' );
+
+            if ( dlgArr[ dlgIdx ][ 0 ] == '#' )
+            {
+                return new DlgStruct( split[ 0 ], split.Length > 1 ? split[ 1 ] : null );
+            }
+
             if ( split.GetLength( 0 ) == 0 ) return null;
+
             return new DlgStruct( split[ 0 ], split[ 1 ] );
         }
 

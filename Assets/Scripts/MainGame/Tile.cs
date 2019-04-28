@@ -36,7 +36,7 @@ public class Tile : MonoBehaviour
         _spriteRenderer = gameObject.AddComponent<SpriteRenderer>();
         _spriteRenderer.sprite = Resources.Load<Sprite>( "Tiles/Textures/Brown Stony Light" );
         _spriteRenderer.drawMode = SpriteDrawMode.Sliced;
-        _spriteRenderer.size = new Vector2( 1, 1 );
+        _spriteRenderer.size = Vector2.one;
     }
 
     // Start is called before the first frame update

@@ -39,4 +39,9 @@ public class UIUser : UI
         this.user = user;
     }
 
+    public override void Refresh()
+    {
+        
+    }
+
 }

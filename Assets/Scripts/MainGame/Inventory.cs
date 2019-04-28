@@ -17,11 +17,6 @@ public class Inventory : MonoBehaviour
         gameObject.name = "Inventory";
 
         m_aItem = new ArrayList();
-        AddItem( null );
-        AddItem( null );
-        AddItem( "MEAT" );
-        AddItem( "VEGETABLE" );
-        AddItem( "EGG" );
     }
 
     // Start is called before the first frame update
@@ -48,7 +43,8 @@ public class Inventory : MonoBehaviour
 
             bSuccess = true;
         }
-
+        Debug.Log( $"아이템 {sItem}을(를) 인벤토리에 추가하였습니다." );
+        
         return bSuccess;
     }
 
@@ -60,6 +56,7 @@ public class Inventory : MonoBehaviour
             if ( sItem.Equals( item.sName ) )
             {
                 m_aItem.RemoveAt( idx );
+                Debug.Log( $"아이템 {sItem}을(를) 인벤토리에 제거하였습니다." );
                 return true;
             }
         }

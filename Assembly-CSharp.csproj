@@ -76,6 +76,7 @@
     <Compile Include="Assets\Scripts\MainGame\Inventory.cs" />
     <Compile Include="Assets\Scripts\MainGame\Module_Parse.cs" />
     <Compile Include="Assets\Scripts\MainGame\Npc.cs" />
+    <Compile Include="Assets\Scripts\MainGame\ScriptFunction.cs" />
     <Compile Include="Assets\Scripts\MainGame\SlidePuzzle.cs" />
     <Compile Include="Assets\Scripts\MainGame\Tile.cs" />
     <Compile Include="Assets\Scripts\MainGame\TileEditor.cs" />
@@ -91,6 +92,9 @@
     <Compile Include="Assets\Scripts\MainMenu\Control_MainMenu.cs" />
     <None Include="Assets\Resources\Dialog\Test.txt" />
     <None Include="Assets\Dice\-Read-Me-.txt" />
+    <None Include="Assets\Resources\Dialog\Tutorial_2.txt" />
+    <None Include="Assets\Resources\Dialog\Tutorial_1.txt" />
+    <None Include="Assets\Resources\Dialog\Tutorial_3.txt" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>C:/Users/Public/Documents/Unity Projects/TowerOfHundred/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>

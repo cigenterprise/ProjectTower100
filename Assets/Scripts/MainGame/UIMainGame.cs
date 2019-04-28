@@ -140,4 +140,9 @@ public class UIMainGame : UI
         m_hpImg.rectTransform.SetSizeWithCurrentAnchors( RectTransform.Axis.Horizontal, kHpBarWidth * stat.fCHP / stat.fMHP );
     }
 
+    public override void Refresh()
+    {
+        
+    }
+
 }

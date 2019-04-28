@@ -38,6 +38,7 @@ public abstract class UI : MonoBehaviour
     }
 
     protected abstract void MakeComponents();
+    public abstract void Refresh();
 
     public enum CUSTOM_ANCHOR
     {

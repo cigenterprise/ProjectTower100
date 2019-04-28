@@ -32,6 +32,7 @@ public class Field : MonoBehaviour
         if ( fieldObj ) Destroy( fieldObj );
         GameObject prefab = Resources.Load( "Map/PF_Field" + currentField.ToString() ) as GameObject;
         fieldObj = Instantiate( prefab );
+        fieldObj.transform.SetParent( this.transform );
         ++currentField;
 
         if ( Control_MainGame.m_user ) Control_MainGame.m_user.ClearDirObj();

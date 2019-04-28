@@ -37,7 +37,7 @@ public class DirCollider : MonoBehaviour
     {
         if ( collision.CompareTag( "Gate" ) )
         {
-            Control_MainGame.m_userObj.transform.localPosition = new Vector2( 0, 0 );
+            Control_MainGame.m_userObj.transform.localPosition = Vector2.zero;
             Control_MainGame.m_field.LoadNextFloor();
         }
     }

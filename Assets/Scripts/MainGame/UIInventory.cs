@@ -11,6 +11,8 @@ public class UIInventory : UI
     const int   kSlotNumRow = 6;
     const int   kSlotNumCol = 4;
 
+    GameObject m_slotRootObj;
+
     new void Awake()
     {
         base.Awake();
@@ -38,31 +40,31 @@ public class UIInventory : UI
         GameObject bgObj = new GameObject();
         bgObj.transform.SetParent( transform );
         bgObj.name = "Background";
-        bgObj.transform.localPosition = new Vector2( 0, 0 );
+        bgObj.transform.localPosition = Vector2.zero;
         RawImage bgImg = bgObj.AddComponent<RawImage>();
         bgImg.rectTransform.SetSizeWithCurrentAnchors( RectTransform.Axis.Horizontal, ( kSlotWidth + kSlotGap ) * kSlotNumCol + kSlotGap );
         bgImg.rectTransform.SetSizeWithCurrentAnchors( RectTransform.Axis.Vertical, ( kSlotHeight + kSlotGap ) * kSlotNumRow + kSlotGap );
         bgImg.color = new Color( 0.5f, 0.5f, 0.5f, 0.4f );
 
         // 슬롯
-        GameObject slotRootObj = new GameObject();
-        slotRootObj.transform.SetParent( transform );
-        slotRootObj.name = "Slot";
-        RectTransform slotRootRect = slotRootObj.AddComponent<RectTransform>();
-        slotRootObj.transform.localPosition = new Vector2( 0, 0 );
+        m_slotRootObj = new GameObject();
+        m_slotRootObj.transform.SetParent( transform );
+        m_slotRootObj.name = "Slot";
+        RectTransform slotRootRect = m_slotRootObj.AddComponent<RectTransform>();
+        m_slotRootObj.transform.localPosition = Vector2.zero;
         slotRootRect.SetSizeWithCurrentAnchors( RectTransform.Axis.Horizontal, ( kSlotWidth + kSlotGap ) * kSlotNumCol + kSlotGap );
         slotRootRect.SetSizeWithCurrentAnchors( RectTransform.Axis.Vertical, ( kSlotHeight + kSlotGap ) * kSlotNumRow + kSlotGap );
 
-        for ( int x = 0; x < kSlotNumCol; ++x )
+        for ( int y = 0; y < kSlotNumRow; ++y )
         {
-            for ( int y = 0; y < kSlotNumRow; ++y )
+            for ( int x = 0; x < kSlotNumCol; ++x )
             {
                 int slotIdx = y * kSlotNumCol + x;
 
                 GameObject slotObj = new GameObject();
                 slotObj.name = $"Slot{slotIdx}";
-                slotObj.transform.SetParent( slotRootObj.transform );
-                slotObj.transform.localPosition = new Vector2( ( kSlotWidth + kSlotGap ) * x + kSlotGap, ( kSlotHeight + kSlotGap ) * y + kSlotGap );
+                slotObj.transform.SetParent( m_slotRootObj.transform );
+                slotObj.transform.localPosition = new Vector2( ( kSlotWidth + kSlotGap ) * x + kSlotGap, ( kSlotHeight + kSlotGap ) * ( kSlotNumRow - y - 1 ) + kSlotGap );
                 RawImage slotImg = slotObj.AddComponent<RawImage>();
                 CustomAnchor( slotImg.rectTransform, CUSTOM_ANCHOR.BOTTOM_LEFT );
                 slotImg.rectTransform.SetSizeWithCurrentAnchors( RectTransform.Axis.Horizontal, kSlotWidth );
@@ -70,19 +72,17 @@ public class UIInventory : UI
                 slotImg.color = new Color( 0.0f, 0.0f, 0.5f, 0.4f );
 
                 Inventory inven = Control_MainGame.m_inventory;
-                if ( inven.m_aItem.Count > slotIdx )
-                {
-                    GameObject itemObj = new GameObject();
-                    itemObj.name = $"SlotItem{slotIdx}";
-                    itemObj.transform.SetParent( slotRootObj.transform );
-                    itemObj.transform.localPosition = new Vector2( ( kSlotWidth + kSlotGap ) * x + kSlotGap, ( kSlotHeight + kSlotGap ) * ( kSlotNumRow - y - 1 ) + kSlotGap );
-                    RawImage itemImg = itemObj.AddComponent<RawImage>();
-                    CustomAnchor( itemImg.rectTransform, CUSTOM_ANCHOR.BOTTOM_LEFT );
-                    itemImg.rectTransform.SetSizeWithCurrentAnchors( RectTransform.Axis.Horizontal, kSlotWidth );
-                    itemImg.rectTransform.SetSizeWithCurrentAnchors( RectTransform.Axis.Vertical, kSlotHeight );
-                    itemImg.color = new Color( 1.0f, 0.0f, 0.0f, 0.4f );
-                    BoxCollider2D boxCollider = itemObj.AddComponent<BoxCollider2D>();
-                }
+
+                GameObject itemObj = new GameObject();
+                itemObj.name = $"SlotItem{slotIdx}";
+                itemObj.transform.SetParent( m_slotRootObj.transform );
+                itemObj.transform.localPosition = new Vector2( ( kSlotWidth + kSlotGap ) * x + kSlotGap, ( kSlotHeight + kSlotGap ) * ( kSlotNumRow - y - 1 ) + kSlotGap );
+                RawImage itemImg = itemObj.AddComponent<RawImage>();
+                CustomAnchor( itemImg.rectTransform, CUSTOM_ANCHOR.BOTTOM_LEFT );
+                itemImg.rectTransform.SetSizeWithCurrentAnchors( RectTransform.Axis.Horizontal, kSlotWidth );
+                itemImg.rectTransform.SetSizeWithCurrentAnchors( RectTransform.Axis.Vertical, kSlotHeight );
+                itemImg.color = new Color( 1.0f, 0.0f, 0.0f, 0.0f );
+                BoxCollider2D boxCollider = itemObj.AddComponent<BoxCollider2D>();
             }
         }
     }
@@ -91,5 +91,33 @@ public class UIInventory : UI
     {
         Debug.Log( $"MOUSEDOWN{Input.mousePosition}" );
         
+    }
+
+    public override void Refresh()
+    {
+        for ( int y = 0; y < kSlotNumRow; ++y )
+        {
+            for ( int x = 0; x < kSlotNumCol; ++x )
+            {
+                int slotIdx = y * kSlotNumCol + x;
+
+                Inventory inven = Control_MainGame.m_inventory;
+                if ( inven.m_aItem.Count > slotIdx )
+                {
+                    Inventory.Item item = inven.m_aItem[ slotIdx ] as Inventory.Item;
+                    GameObject itemObj = m_slotRootObj.transform.Find( $"SlotItem{slotIdx}" ).gameObject;
+                    RawImage itemImg = itemObj.GetComponent<RawImage>();
+                    itemImg.color = Color.white;
+                    itemImg.texture = Resources.Load<Texture>( $"UI/Icons/{item.sName}" );
+                }
+                else
+                {
+                    GameObject itemObj = m_slotRootObj.transform.Find( $"SlotItem{slotIdx}" ).gameObject;
+                    RawImage itemImg = itemObj.GetComponent<RawImage>();
+                    itemImg.color = new Color( 1, 0, 0, 0.4f );
+                    itemImg.texture = null;
+                }
+            }
+        }
     }
 }

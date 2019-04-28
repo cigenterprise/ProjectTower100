@@ -14,20 +14,23 @@ public class Actor : MonoBehaviour
     [System.Serializable]
     public class Stat
     {
-        public float fVEL   = 0.1f;     // Velocity
-        public float fCHP   = 10.0f;    // Current HP
-        public float fMHP   = 10.0f;    // Max HP
-        public float fCH    = 10.0f;    // Current Hunger
-        public float fMH    = 10.0f;    // Max Hunger
-        public float fADB   = 1.0f;     // Attack Damage Base
+        public string   sName   = null;
+        public float    fVEL    = 0.1f;     // Velocity
+        public float    fCHP    = 10.0f;    // Current HP
+        public float    fMHP    = 10.0f;    // Max HP
+        public float    fCH     = 10.0f;    // Current Hunger
+        public float    fMH     = 10.0f;    // Max Hunger
+        public float    fADB    = 1.0f;     // Attack Damage Base
     }
     public Stat m_stat = new Stat();
 
     protected void Awake()
     {
+        m_stat.sName = name;
+
         m_spriteObj = new GameObject();
         m_spriteObj.name = "Sprite";
-        m_spriteObj.transform.SetParent(transform);
+        m_spriteObj.transform.SetParent( transform );
         RectTransform spriteTfm = m_spriteObj.AddComponent<RectTransform>();
         spriteTfm.localScale = Vector3.one;
         spriteTfm.localPosition = new Vector3( 0, 0, LAYERZ.ACTOR );
@@ -79,5 +82,10 @@ public class Actor : MonoBehaviour
     public void IncreaseHp( float value )
     {
         m_stat.fCHP -= value;
+    }
+
+    public void SetName( string sName )
+    {
+        m_stat.sName = sName;
     }
 }

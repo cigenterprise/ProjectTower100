@@ -1,2 +1,4 @@
 ﻿Ahri:안녕?
-Ahri:하위~
+Ahri:응 안녕~
+#NameInput
+Ahri:그렇군..

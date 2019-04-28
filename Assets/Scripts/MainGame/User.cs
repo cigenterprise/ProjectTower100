@@ -16,12 +16,14 @@ public class User : Actor
         public int currency;
     }
     public UserStat userStat;
-    
+
+    bool m_bNameSet = false;
+
     new void Awake()
     {
-        base.Awake();
-
         gameObject.name = "User";
+
+        base.Awake();
 
         m_spriteSize.Set( 1.0f, 1.5f );
         SetSprite( "Ahri_SD" );
@@ -69,7 +71,7 @@ public class User : Actor
         if ( Input.GetKey( KeyCode.RightArrow ) )
         {
             Move( dirObj[ DIRECTION.RIGHT ], m_stat.fVEL );
-            transform.localScale = new Vector3( 1, 1, 1 );
+            transform.localScale = Vector3.one;
         }
         if ( Input.GetKey( KeyCode.LeftArrow ) )
         {
@@ -102,6 +104,17 @@ public class User : Actor
     public ref UserStat GetUserStat()
     {
         return ref userStat;
+    }
+
+    public new void SetName( string sName )
+    {
+        base.SetName( sName );
+        m_bNameSet = true;
+    }
+
+    public bool IsNameSet()
+    {
+        return m_bNameSet;
     }
 
 }

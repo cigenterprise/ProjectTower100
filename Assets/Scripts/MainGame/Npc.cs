@@ -41,7 +41,7 @@ public class Npc : Actor
         {
             if ( ( m_typeFlag & TYPEFLAG.DIALOG ) == TYPEFLAG.DIALOG )
             {
-                Control_MainGame.m_uiDialog.PopUpDialog( "Test.txt" );
+                Control_MainGame.m_uiDialog.PopUpDialog( "Tutorial_1.txt" );
             }
             if ( ( m_typeFlag & TYPEFLAG.COOK ) == TYPEFLAG.COOK )
             {
