@@ -15,6 +15,7 @@ public class Actor : MonoBehaviour
     public class Stat
     {
         public string   sName   = null;
+        public string   sSprite = null;
         public float    fVEL    = 0.1f;     // Velocity
         public float    fCHP    = 10.0f;    // Current HP
         public float    fMHP    = 10.0f;    // Max HP

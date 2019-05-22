@@ -92,6 +92,7 @@
     <Compile Include="Assets\Scripts\MainMenu\Control_MainMenu.cs" />
     <None Include="Assets\Resources\Dialog\Test.txt" />
     <None Include="Assets\Dice\-Read-Me-.txt" />
+    <None Include="Assets\ProjectSettings\ProjectVersion.txt" />
     <None Include="Assets\Resources\Dialog\Tutorial_2.txt" />
     <None Include="Assets\Resources\Dialog\Tutorial_1.txt" />
     <None Include="Assets\Resources\Dialog\Tutorial_3.txt" />

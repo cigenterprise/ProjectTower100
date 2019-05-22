@@ -18,9 +18,9 @@ public class Npc : Actor
     {
         base.Awake();
 
-        name = "Npc_" + Type;
-
         m_typeFlag = GetNpcType();
+
+        MakeComponents();
     }
 
     // Use this for initialization
@@ -64,6 +64,11 @@ public class Npc : Actor
         if ( Type.Equals( "Cook" ) ) return TYPEFLAG.COOK;
 
         return TYPEFLAG.DEFAULT;
+    }
+
+    void MakeComponents()
+    {
+        if ( m_stat.sSprite != null && m_stat.sSprite.Length > 0 ) SetSprite( m_stat.sSprite );
     }
 
 }
